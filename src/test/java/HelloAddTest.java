@@ -8,9 +8,4 @@ public class HelloAddTest {
     void addHelloGood() {
         assertEquals(HelloWorld.add(1, 2), 3);
     }
-
-    @Test
-    void addHelloBad() {
-        assertEquals(HelloWorld.add(1, 2), 4);
-    }
 }
