@@ -6,7 +6,20 @@ public class ConditionsMetVector {
 
     ConditionsMetVector(Input input) {
         this.conditions = new boolean[15];
+        this.conditions[0] = LIC1(input);
         this.conditions[4] = LIC4(input);
+    }
+
+    // LIC 0
+    // Return true if there are two consecutive points in "input.points" that have a distance 
+    // greater then "input.parameters.length1"
+
+    public static boolean LIC1(Input input) {
+        for (int i = 0; i < input.points.length - 1; i++) {
+            if (Point.distance(input.points[i], input.points[i+1]) > input.parameters.length1) {
+                return true; 
+            }
+        }
     }
 
     // LIC 3
