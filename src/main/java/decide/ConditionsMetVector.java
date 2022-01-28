@@ -23,6 +23,24 @@ public class ConditionsMetVector {
         return false;
     }
 
+    //LIC 2
+    // Return True if there exists three consecutive data points which form an angle such that
+    // angle < (PI - EPSILON) or angle > (PI + EPSILON) AND
+    // The second of the three consecutive points is always the vertex of the angle
+    
+    public static boolean LIC2(Input input){
+        int angle;
+        for (int i = 0; i < input.points.length - 2; i++ ) {
+            if (!input.points[i+1].coincides(input.points[i]) && !input.points[i+1].coincides(input.points[i+2])) {
+                angle = input.points[i].angle(input.points[i], input.points[i+1], input.points[i+2]);
+                if ( (angle < (Math.PI - input.epsilon1)) || (angle > (Math.PI + input.epsilon1)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     // LIC 4
     // Returns true if there are `Q` (read from input) consecutive data points
     // that lie in more than `QUADS` (read from input) quadrants.
