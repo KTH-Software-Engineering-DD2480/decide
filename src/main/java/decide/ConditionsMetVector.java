@@ -46,7 +46,7 @@ public class ConditionsMetVector {
         double angle;
         for (int i = 0; i < input.points.length - 2; i++ ) {
             if (!input.points[i+1].coincides(input.points[i]) && !input.points[i+1].coincides(input.points[i+2])) {
-                angle = input.points[i].angle(input.points[i], input.points[i+1], input.points[i+2]);
+                angle = Point.angle(input.points[i], input.points[i+1], input.points[i+2]);
                 if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
                     return true;
                 }
@@ -118,7 +118,7 @@ public class ConditionsMetVector {
         
         for (int i=0; i < input.points.length - seperation - 2; i++ ){
             if (!input.points[i+input.parameters.c_points+1].coincides(input.points[i]) && !input.points[i+input.parameters.c_points+1].coincides(input.points[i+seperation+2])) {
-                angle = input.points[i].angle(input.points[i], input.points[i+input.parameters.c_points+1], input.points[i+seperation+2]);
+                angle = Point.angle(input.points[i], input.points[i+input.parameters.c_points+1], input.points[i+seperation+2]);
                 if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
                     return true;
                 }
@@ -135,5 +135,34 @@ public class ConditionsMetVector {
     public static boolean LIC10(Input input) {
         if(input.points.length < 5) { return false; }
         return LIC3(input, input.parameters.e_points, input.parameters.f_points);
+    }
+
+    // LIC 12
+    // Return true if two data points seperated by K_PTS have a distance greater than length1
+    // and if there are two datapoints seperated by K_PTS that have a distance less than length2
+    public static boolean LIC12(Input input){
+        boolean condition1 = false; 
+        boolean condition2 = false;
+
+        if (input.points.length < 3) {
+            return false;
+        }
+
+        for (int i = 0; i < input.points.length - input.parameters.k_points-1; i++) {
+            if (input.points[i].distance(input.points[i+input.parameters.k_points+1]) > input.parameters.length1) {
+                condition1 =  true;
+            }
+        }
+
+        for (int i = 0; i < input.points.length - input.parameters.k_points-1; i++) {
+            if (input.points[i].distance(input.points[i+input.parameters.k_points+1]) < input.parameters.length2) {
+                condition2 =  true;
+            }
+        }
+
+        if (condition1 && condition2) {
+            return true;
+        }
+        return false;
     }
 }

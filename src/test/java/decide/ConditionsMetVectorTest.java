@@ -392,4 +392,104 @@ public class ConditionsMetVectorTest {
 
         assertFalse(ConditionsMetVector.LIC10(input));
     }
+
+    // LIC 12 - Test 1
+    // Assert true if two datapoints seperated at K_points have a distance greater than length1
+    // And two datapoints seperated at k_points have distance less than length2
+    // And more than 3 datapoints
+    // Where the Length1 is 10
+    // K_pts = 2
+    @Test
+    void LIC12assertTrueIfDistanceIsGreaterThanLength1AndSmallerThanLength2() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.parameters.length2 = 10;
+        input.parameters.k_points = 2;
+        input.points = new Point[] {
+            new Point(0,5), // Condition 2
+            new Point(0,0), // Condition 1
+            new Point(0,6), 
+            new Point(0,7), // Condition 2
+            new Point(0,11), // Condition 1
+        };
+
+        //Assert
+        assertTrue(ConditionsMetVector.LIC12(input));
+    }
+
+    // LIC 12 - Test 2
+    // Assert false if two datapoints seperated at K_points have a distance smaller than length1
+    // And two datapoints have distance smaller than length2
+    // Where the Length1 is 10
+     // K_pts = 2
+    @Test
+    void LIC12AssertFalseIfDistanceIsLessThanAsLength1ButSmallerThanLength2() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.parameters.length2 = 10;
+        input.parameters.k_points = 2;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,1),
+            new Point(0,2),
+            new Point(0,3),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC12(input));
+    }
+
+    // LIC 12 - Test 3
+    // Assert false if two datapoints seperated at K_points have a distance larger than length1
+    // And two datapoints have distance larger than length2
+    // Where the Length1 is 10
+     // K_pts = 2
+     @Test
+     void LIC12AssertFalseIfDistanceIsLargerThanAsLength1ButLargerThanLength2() {
+         Input input = new Input();
+         input.parameters = input.new Parameters();
+ 
+         //Setup
+         input.parameters.length1 = 10;
+         input.parameters.length2 = 1;
+         input.parameters.k_points = 2;
+         input.points = new Point[] {
+             new Point(0,0),
+             new Point(0,11),
+             new Point(0,22),
+             new Point(0,33),
+         };
+ 
+         //Assert
+         assertFalse(ConditionsMetVector.LIC12(input));
+     }
+
+     // LIC 12 - Test 4
+    // Assert false if two datapoints less than 3
+    // Where the Length1 is 10
+     // K_pts = 2
+     @Test
+     void LIC12AssertFalseIfNumPointsIsLessThan3() {
+         Input input = new Input();
+         input.parameters = input.new Parameters();
+ 
+         //Setup
+         input.parameters.length1 = 10;
+         input.parameters.length2 = 1;
+         input.parameters.k_points = 2;
+         input.points = new Point[] {
+             new Point(0,0),
+             new Point(0,11),
+         };
+ 
+         //Assert
+         assertFalse(ConditionsMetVector.LIC12(input));
+     }
+
 }
