@@ -17,8 +17,8 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.length1 = 10;
-        input.parameters.points = new Point[] {
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
             new Point(0,0),
             new Point(0,11),
         };
@@ -36,8 +36,8 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.length1 = 10;
-        input.parameters.points = new Point[] {
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
             new Point(0,0),
             new Point(0,9),
         };
@@ -55,8 +55,8 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.length1 = 10;
-        input.parameters.points = new Point[] {
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
             new Point(0,0),
             new Point(0,10),
         };
