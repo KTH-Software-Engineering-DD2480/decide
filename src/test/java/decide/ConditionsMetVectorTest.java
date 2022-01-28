@@ -7,6 +7,63 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 public class ConditionsMetVectorTest {
+
+    // LIC 0 - Test 1
+    // Assert true if there exist only two points that have a distance greater than 10
+    // Where the Length1 is 10
+    @Test
+    void LIC0assertTrueIfDistanceIsGreaterThanLength1() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,11),
+        };
+
+        //Assert
+        assertTrue(ConditionsMetVector.LIC1(input));
+    }
+
+    // LIC 0 - Test 2
+    // Assert false if there exist only two points that have a distance smaller than 10
+    // Where the Length1 is 10
+    @Test
+    void LIC0AssertFalseIfDistanceIsLessThanAsLength1() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,9),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC1(input));
+    }
+
+    // LIC 0 - Test 3
+    // Assert false if there exist only two points that have a distance than 10
+    // Where the Length1 is 10
+    @Test
+    void LIC0AssertFalseIfDistanceIsSameAsLength1() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,10),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC1(input));
+    }
     @Test
     void LIC4differentQuadrants() {
         Input input = new Input();
