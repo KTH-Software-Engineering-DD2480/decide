@@ -40,7 +40,7 @@ public class Point {
         // => angle = acos((ba.bc) / |ba| / |bc|)
         double dot = bax*bcx + bay*bcy;
         double angle = Math.acos(dot / ba_length / bc_length);
-
+        
         return angle;
     }
 
@@ -60,5 +60,13 @@ public class Point {
 
         // The area of the triangle is half of the paralellogram
         return Math.abs(det / 2);
+    }
+
+    // Return true if two points coincides
+    public boolean coincides(Point b) {
+        if ((this.x == b.x) && (this.y == b.y)) {
+            return true;
+        }
+        return false;
     }
 }
