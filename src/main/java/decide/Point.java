@@ -9,7 +9,7 @@ public class Point {
     }
 
     // Compute the distance between two points
-    public double distance(Point a, Point b) {
+    public static double distance(Point a, Point b) {
         double dx = a.x - b.x;
         double dy = a.y - b.y;
         return length(dx, dy);
