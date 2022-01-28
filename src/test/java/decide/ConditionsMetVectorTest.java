@@ -24,7 +24,7 @@ public class ConditionsMetVectorTest {
         };
 
         //Assert
-        assertTrue(ConditionsMetVector.LIC1(input));
+        assertTrue(ConditionsMetVector.LIC0(input));
     }
 
     // LIC 0 - Test 2
@@ -43,7 +43,7 @@ public class ConditionsMetVectorTest {
         };
 
         //Assert
-        assertFalse(ConditionsMetVector.LIC1(input));
+        assertFalse(ConditionsMetVector.LIC0(input));
     }
 
     // LIC 0 - Test 3
@@ -62,7 +62,7 @@ public class ConditionsMetVectorTest {
         };
 
         //Assert
-        assertFalse(ConditionsMetVector.LIC1(input));
+        assertFalse(ConditionsMetVector.LIC0(input));
     }
 
     // LIC 2 - Test 1
