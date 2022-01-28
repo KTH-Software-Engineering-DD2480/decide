@@ -70,4 +70,14 @@ public class ConditionsMetVectorTest {
 		input.points = new Point[] { new Point(1, 2), new Point(3, 3), new Point(2, 4) };
 		assertTrue(ConditionsMetVector.LIC5(input));
 	}
+
+    @Test
+    void distance() {
+        // Make sure that the computed distance is correct
+        assertEquals(1.2, ConditionsMetVector.distance(new Point(0, 1.5), new Point(2,0), new Point(0,0)));
+
+        // A point on the line should result in 0
+        assertEquals(0, ConditionsMetVector.distance(new Point(2, 2), new Point(0,0), new Point(1,1)));
+ 
+    }
 }

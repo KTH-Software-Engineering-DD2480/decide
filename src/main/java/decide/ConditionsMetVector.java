@@ -1,6 +1,7 @@
 package decide;
 
 import java.util.Arrays;
+import java.lang.Math;
 
 public class ConditionsMetVector {
     // Launch Interceptor Conditions
@@ -60,5 +61,25 @@ public class ConditionsMetVector {
             }
         }
         return false;
+    }
+
+    // LIC 6
+    public static boolean LIC6(Input input){
+        return false;
+    }
+
+    // Computes the distance between a line, defined by start and end, and the point p.
+    static double distance(Point start, Point end, Point p){
+        
+        // The numerator of the formula is |a(p_x) + b(p_y) + c| with the line ax + by + c = 0
+        double a = start.y - end.y;
+        double b = end.x - start.x;
+        double c = (start.x - end.x) * start.y + (end.y - start.y)*start.x;
+        double numerator = Math.abs(a*p.x + b*p.y + c);
+
+        // The denominator is sqrt(a^2 + b^2)
+        double denominator = Math.sqrt(Math.pow(a,2) + Math.pow(b, 2));
+
+        return numerator/denominator;
     }
 }
