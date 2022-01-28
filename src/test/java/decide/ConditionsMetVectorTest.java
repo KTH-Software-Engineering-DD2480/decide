@@ -20,11 +20,11 @@ public class ConditionsMetVectorTest {
         input.length1 = 10;
         input.points = new Point[] {
             new Point(0,0),
-            new Point(0,11)
-        }
+            new Point(0,11),
+        };
 
         //Assert
-        assertTrue(ConditionsMetVector.LIC1(input))
+        assertTrue(ConditionsMetVector.LIC1(input));
     }
 
     // LIC 0 - Test 2
@@ -39,11 +39,11 @@ public class ConditionsMetVectorTest {
         input.length1 = 10;
         input.points = new Point[] {
             new Point(0,0),
-            new Point(0,9)
-        }
+            new Point(0,9),
+        };
 
         //Assert
-        assertFalse(ConditionsMetVector.LIC1(input))
+        assertFalse(ConditionsMetVector.LIC1(input));
     }
 
     // LIC 0 - Test 3
@@ -58,11 +58,11 @@ public class ConditionsMetVectorTest {
         input.length1 = 10;
         input.points = new Point[] {
             new Point(0,0),
-            new Point(0,10)
-        }
+            new Point(0,10),
+        };
 
         //Assert
-        assertFalse(ConditionsMetVector.LIC1(input))
+        assertFalse(ConditionsMetVector.LIC1(input));
     }
     @Test
     void LIC4differentQuadrants() {
