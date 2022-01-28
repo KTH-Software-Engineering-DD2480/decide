@@ -8,36 +8,94 @@ import org.junit.jupiter.api.Test;
 
 public class ConditionsMetVectorTest {
 
-    // Assures that LIC3 returns true if any three consecutive points in `points` froms a triangle with area > `area`
+    // LIC 0 - Test 1
+    // Assert true if there exist only two points that have a distance greater than 10
+    // Where the Length1 is 10
+    @Test
+    void LIC0assertTrueIfDistanceIsGreaterThanLength1() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,11),
+        };
+
+        //Assert
+        assertTrue(ConditionsMetVector.LIC1(input));
+    }
+
+    // LIC 0 - Test 2
+    // Assert false if there exist only two points that have a distance smaller than 10
+    // Where the Length1 is 10
+    @Test
+    void LIC0AssertFalseIfDistanceIsLessThanAsLength1() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,9),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC1(input));
+    }
+
+    // LIC 0 - Test 3
+    // Assert false if there exist only two points that have a distance than 10
+    // Where the Length1 is 10
+    @Test
+    void LIC0AssertFalseIfDistanceIsSameAsLength1() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.length1 = 10;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,10),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC1(input));
+    }
+
     @Test
     void LIC3trueTest() {
         Input input = new Input();
         input.parameters = input.new Parameters();
         // use `area` = 10 for testing purposes
         input.parameters.area = 10;
+
         // expected area = 12.5
         input.points = new Point[] {    
             new Point(0, 0),
             new Point(0, 5),
             new Point(5, 0)
         };
-        // `e_points` = 0 and `f_points` = 0 for LIC3
+
         assertTrue(ConditionsMetVector.LIC3(input, 0, 0));
     }
 
-    // Assures that LIC3 returns false if no three consecutive `points` forms a triangle with area > `area`
     @Test
     void LIC3falseTest() {
         Input input = new Input();
         input.parameters = input.new Parameters();
         // use `area` = 10 for testing purposes
         input.parameters.area = 10;
+
         // expected area = 2
-        input.points = new Point[] {
+        input.points = new Point[] {    
             new Point(0, 0),
             new Point(0, 2),
             new Point(2, 0)
         };
+
         assertFalse(ConditionsMetVector.LIC3(input, 0, 0));
     }
 
