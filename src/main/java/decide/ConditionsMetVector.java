@@ -16,10 +16,11 @@ public class ConditionsMetVector {
 
     public static boolean LIC1(Input input) {
         for (int i = 0; i < input.points.length - 1; i++) {
-            if (Point.distance(input.points[i], input.points[i+1]) > input.parameters.length1) {
+            if (input.points[i].distance(input.points[i+1]) > input.parameters.length1) {
                 return true; 
             }
         }
+        return false;
     }
 
     // LIC 4
