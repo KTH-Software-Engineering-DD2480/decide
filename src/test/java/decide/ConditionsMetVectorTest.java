@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class ConditionsMetVectorTest {
     @Test
-    void LIC4() {
+    void LIC4differentQuadrants() {
         Input input = new Input();
         input.parameters = input.new Parameters();
         input.parameters.q_points = 3;
@@ -27,6 +27,21 @@ public class ConditionsMetVectorTest {
         // If we reduce the number of quadrants, it should be possible for 2 points
         input.parameters.quads = 1;
         assertTrue(ConditionsMetVector.LIC4(input));
+    }
+
+    @Test
+    void LIC4sameQuadrant() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.q_points = 3;
+        input.parameters.quads = 2;
+        input.points = new Point[]{
+            new Point(0, 0),
+            new Point(1, 0),
+            new Point(0, 1),
+        };
+        // All points are in the same quadrant
+        assertFalse(ConditionsMetVector.LIC4(input));
     }
 
     @Test
