@@ -106,6 +106,28 @@ public class ConditionsMetVector {
         return false;
     }
 
+    // LIC 9
+    // Return true if ange of three points seperated by C_PTS and D_PTS has 
+    // angle smaller than Pi - epsilon or bigger than pi + epsilon
+    public static boolean LIC9(Input input){
+        if (input.points.length < 5) {
+            return false;
+        }
+        int seperation = input.parameters.c_points + input.parameters.d_points;
+        double angle;
+        
+        for (int i=0; i < input.points.length - seperation - 2; i++ ){
+            if (!input.points[i+input.parameters.c_points+1].coincides(input.points[i]) && !input.points[i+input.parameters.c_points+1].coincides(input.points[i+seperation+2])) {
+                angle = input.points[i].angle(input.points[i], input.points[i+input.parameters.c_points+1], input.points[i+seperation+2]);
+                if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
     // LIC 10
     // Returns true if there exists at least one set of three data points separated by exactly `e_points` and `f_points`
     // consecutive intervening points, respectively, that are the vertices of a triangle with area greater
