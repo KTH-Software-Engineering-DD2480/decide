@@ -40,7 +40,7 @@ public class Point {
         // => angle = acos((ba.bc) / |ba| / |bc|)
         double dot = bax*bcx + bay*bcy;
         double angle = Math.acos(dot / ba_length / bc_length);
-
+        
         return angle;
     }
 
@@ -63,7 +63,7 @@ public class Point {
     }
 
     // Return true if two points coincides
-    public static boolean coincides(Point b) {
+    public boolean coincides(Point b) {
         if ((this.x == b.x) && (this.y == b.y)) {
             return true;
         }

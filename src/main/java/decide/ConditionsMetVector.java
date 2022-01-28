@@ -29,11 +29,11 @@ public class ConditionsMetVector {
     // The second of the three consecutive points is always the vertex of the angle
     
     public static boolean LIC2(Input input){
-        int angle;
+        double angle;
         for (int i = 0; i < input.points.length - 2; i++ ) {
             if (!input.points[i+1].coincides(input.points[i]) && !input.points[i+1].coincides(input.points[i+2])) {
                 angle = input.points[i].angle(input.points[i], input.points[i+1], input.points[i+2]);
-                if ( (angle < (Math.PI - input.epsilon1)) || (angle > (Math.PI + input.epsilon1)) {
+                if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
                     return true;
                 }
             }

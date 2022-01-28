@@ -64,6 +64,67 @@ public class ConditionsMetVectorTest {
         //Assert
         assertFalse(ConditionsMetVector.LIC1(input));
     }
+
+    // LIC 2 - Test 1
+    // Assert true if there exists three consectutive nodes that have an angle smaller than PI - Epsilon
+    // Where epsilon is PI/2
+    @Test
+    void LIC2AssertTrueIfAngleIsSmallerPIMinusEpsilon(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.points = new Point[] {
+            new Point(1,0),
+            new Point(0,0),
+            new Point(1.0/2.0, Math.sqrt(3)/2.0),
+        };
+
+        //Assert
+        assertTrue(ConditionsMetVector.LIC2(input));
+    }
+
+    // LIC 2 - Test 2
+    // Assert false if there exists three consectutive nodes that have an angle bigger than PI - Epsilon
+    // Where epsilon is PI/2
+    @Test
+    void LIC2AssertFalseIfAngleisBiggerThanPIMinusEpsilon(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.points = new Point[] {
+            new Point(1,0),
+            new Point(0,0),
+            new Point(-Math.sqrt(3)/2.0,1.0/2.0),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC2(input));
+    }
+
+    // LIC 2 - Test 3
+    // Assert false if two points coincides
+    // Where epsilon is PI/2
+    @Test
+    void LIC2AssertFalseIfpointsCoincides(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(0,0),
+            new Point(-Math.sqrt(3)/2.0,1.0/2.0),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC2(input));
+    }
+
     @Test
     void LIC4differentQuadrants() {
         Input input = new Input();
