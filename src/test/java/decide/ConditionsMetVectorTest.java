@@ -71,6 +71,37 @@ public class ConditionsMetVectorTest {
 		assertTrue(ConditionsMetVector.LIC5(input));
 	}
 
+    
+    // Test for LIC 6
+    @Test
+    void test_LIC6() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.n_points = 3;
+        input.parameters.dist = 3;
+
+        // test the base case
+        input.points = new Point[]{new Point(0, 0),new Point(1, 1)};
+        assertFalse(ConditionsMetVector.LIC6(input));
+
+        // positive test with different start and end point
+        input.points = new Point[] { new Point(1, 2), new Point(6, 6), new Point(1,1), new Point(0, 6)};
+		assertTrue(ConditionsMetVector.LIC6(input));
+
+		// Negative test with different start and end point
+		input.points = new Point[] { new Point(0, 0), new Point(1, 1), new Point(2, 2), new Point(3,3)};
+		assertFalse(ConditionsMetVector.LIC6(input));
+
+		// positive test with the same start and end point
+		input.points = new Point[] { new Point(1, 2), new Point(2, 2), new Point(10,10), new Point(1, 2)};
+		assertTrue(ConditionsMetVector.LIC6(input));
+
+        // negative test with the same start and end point
+		input.points = new Point[] { new Point(1, 2), new Point(1, 1), new Point(2,2), new Point(1, 2)};
+		assertFalse(ConditionsMetVector.LIC6(input));
+	}
+
+
     @Test
     void distance() {
         // Make sure that the computed distance is correct
