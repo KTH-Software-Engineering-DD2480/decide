@@ -21,7 +21,8 @@ public class ConditionsMetVectorTest {
             new Point(0, 5),
             new Point(5, 0)
         };
-        assertTrue(ConditionsMetVector.LIC3(input));
+        // `e_points` = 0 and `f_points` = 0 for LIC3
+        assertTrue(ConditionsMetVector.LIC3(input, 0, 0));
     }
 
     // Assures that LIC3 returns false if no three consecutive `points` forms a triangle with area > `area`
@@ -37,7 +38,7 @@ public class ConditionsMetVectorTest {
             new Point(0, 2),
             new Point(2, 0)
         };
-        assertFalse(ConditionsMetVector.LIC3(input));
+        assertFalse(ConditionsMetVector.LIC3(input, 0, 0));
     }
 
     @Test
@@ -103,4 +104,70 @@ public class ConditionsMetVectorTest {
 		input.points = new Point[] { new Point(1, 2), new Point(3, 3), new Point(2, 4) };
 		assertTrue(ConditionsMetVector.LIC5(input));
 	}
+
+    @Test
+    void LIC10trueTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        // use `area` = 10 for testing purposes
+        input.parameters.area = 10;
+
+        input.parameters.e_points = 2;
+        input.parameters.f_points = 3;
+
+        // expected area = 12.5
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 5),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(5, 0)
+        };
+
+        assertTrue(ConditionsMetVector.LIC10(input));
+    }
+
+    @Test
+    void LIC10falseTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        // use `area` = 10 for testing purposes
+        input.parameters.area = 10;
+
+        input.parameters.e_points = 2;
+        input.parameters.f_points = 3;
+
+        // expected area = 2
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 2),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(2, 0)
+        };
+
+        assertFalse(ConditionsMetVector.LIC10(input));
+    }
+
+    @Test
+    void LIC10lengthTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        // number of points < 5
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 5),
+        };
+
+        assertFalse(ConditionsMetVector.LIC10(input));
+    }
 }
