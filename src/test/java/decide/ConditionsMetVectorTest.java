@@ -37,7 +37,7 @@ public class ConditionsMetVectorTest {
             new Point(0, 2),
             new Point(2, 0)
         };
-        assertTrue(ConditionsMetVector.LIC3(input));
+        assertFalse(ConditionsMetVector.LIC3(input));
     }
 
     @Test
