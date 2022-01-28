@@ -113,12 +113,12 @@ public class ConditionsMetVector {
         if (input.points.length < 5) {
             return false;
         }
-        int seperation = input.parameters.c_points + input.parameters.d_points
+        int seperation = input.parameters.c_points + input.parameters.d_points;
         double angle;
         
         for (int i=0; i < input.points.length - seperation - 2; i++ ){
-            if (!input.points[i+1].coincides(input.points[i]) && !input.points[i+1].coincides(input.points[i+2])) {
-                angle = input.points[i].angle(input.points[i], input.points[i+1], input.points[i+2]);
+            if (!input.points[i+input.parameters.c_points+1].coincides(input.points[i]) && !input.points[i+input.parameters.c_points+1].coincides(input.points[i+seperation+2])) {
+                angle = input.points[i].angle(input.points[i], input.points[i+input.parameters.c_points+1], input.points[i+seperation+2]);
                 if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
                     return true;
                 }

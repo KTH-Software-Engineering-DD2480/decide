@@ -223,6 +223,110 @@ public class ConditionsMetVectorTest {
 		assertTrue(ConditionsMetVector.LIC5(input));
 	}
 
+    // LIC 9 - Test 1
+    // Assert true if there exists three nodes seperated by Cpts and dpts that have an angle smaller than PI - Epsilon
+    // Where epsilon is PI/2 and cPts = 2 and dPts=3
+    @Test
+    void LIC9AssertTrueIfAngleIsSmallerPIMinusEpsilon(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.c_points = 2;
+        input.parameters.d_points = 2;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(1,0), // First point
+            new Point(0,0),
+            new Point(3,0),
+            new Point(0,0), // Second point
+            new Point(4,0),
+            new Point(3,0),
+            new Point(1.0/2.0, Math.sqrt(3)/2.0), // Third Point
+            new Point(6,0),
+        };
+
+        //Assert
+        assertTrue(ConditionsMetVector.LIC9(input));
+    }
+
+    // LIC 9 - Test 2
+    // Assert false if there exists three nodes seperated by Cpts and dpts that have an angle larger than PI - Epsilon
+    // Where epsilon is PI/2 and cPts = 2 and dPts=3
+    @Test
+    void LIC9AssertFalseIfAngleisBiggerThanPIMinusEpsilon(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.c_points = 2;
+        input.parameters.d_points = 2;
+        input.points = new Point[] {
+            new Point(0,0),
+            new Point(1,0), // First point
+            new Point(0,0),
+            new Point(3,0),
+            new Point(0,0), // Second point
+            new Point(4,0),
+            new Point(3,0),
+            new Point(-Math.sqrt(3)/2.0,1.0/2.0), // Third Point
+            new Point(6,0),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC9(input));
+    }
+
+    // LIC 9 - Test 3
+    // Assert false if numpoints < 5
+    // Where epsilon is PI/2
+    @Test
+    void LIC9AssertFalseIfpointsIsLessThanFive(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.c_points = 1;
+        input.parameters.d_points = 1;
+        input.points = new Point[] {
+            new Point(1,0),
+            new Point(0,0),
+            new Point(-Math.sqrt(3)/2.0,1.0/2.0),
+            new Point(2,0),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC9(input));
+    }
+
+    // LIC 9 - Test 4
+    // Assert false if points coincide
+    // Where epsilon is PI/2
+    @Test
+    void LIC9AssertFalseIfpointsCoincide(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        //Setup
+        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.c_points = 1;
+        input.parameters.d_points = 1;
+        input.points = new Point[] {
+            new Point(1,0),
+            new Point(0,0),
+            new Point(0,0),
+            new Point(1.0/2.0, Math.sqrt(3)/2.0),
+            new Point(0,0),
+            new Point(1.0/2.0, Math.sqrt(3)/2.0),
+        };
+
+        //Assert
+        assertFalse(ConditionsMetVector.LIC9(input));
+    }
+
     @Test
     void LIC10trueTest() {
         Input input = new Input();
