@@ -9,9 +9,9 @@ public class Point {
     }
 
     // Compute the distance between two points
-    public double distance(Point other) {
-        double dx = this.x - other.x;
-        double dy = this.y - other.y;
+    public double distance(Point a, Point b) {
+        double dx = a.x - b.x;
+        double dy = a.y - b.y;
         return length(dx, dy);
     }
 
