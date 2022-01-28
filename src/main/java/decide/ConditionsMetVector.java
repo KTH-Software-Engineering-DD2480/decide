@@ -1,7 +1,5 @@
 package decide;
 
-import java.util.Arrays;
-
 public class ConditionsMetVector {
     // Launch Interceptor Conditions
     public boolean[] conditions;
