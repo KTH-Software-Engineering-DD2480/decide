@@ -17,7 +17,20 @@ public class ConditionsMetVector {
     public static boolean LIC1(Input input) {
         for (int i = 0; i < input.points.length - 1; i++) {
             if (input.points[i].distance(input.points[i+1]) > input.parameters.length1) {
-                return true; 
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // LIC 3
+    // Returns true if there are three consecutive points, seperated by `e_points` and `f_points` (both are 0 for LIC3)
+    // in `input.points` that form a triangle with an area greater than `input.parameters.area`
+    public static boolean LIC3(Input input, int e_points, int f_points) {
+        int sequence_length = e_points + f_points + 2;
+        for(int i = 0; i < input.points.length - sequence_length; i++) {
+            if(Point.triangleArea(input.points[i], input.points[i + 1 + e_points], input.points[i + 2 + e_points + f_points]) > input.parameters.area) {
+                return true;
             }
         }
         return false;
@@ -72,5 +85,14 @@ public class ConditionsMetVector {
             }
         }
         return false;
+    }
+
+    // LIC 10
+    // Returns true if there exists at least one set of three data points separated by exactly `e_points` and `f_points`
+    // consecutive intervening points, respectively, that are the vertices of a triangle with area greater
+    // than `input.parameters.area`. The condition is not met when `input.points.length` < 5
+    public static boolean LIC10(Input input) {
+        if(input.points.length < 5) { return false; }
+        return LIC3(input, input.parameters.e_points, input.parameters.f_points);
     }
 }

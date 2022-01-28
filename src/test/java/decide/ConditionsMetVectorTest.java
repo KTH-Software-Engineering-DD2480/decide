@@ -64,6 +64,41 @@ public class ConditionsMetVectorTest {
         //Assert
         assertFalse(ConditionsMetVector.LIC1(input));
     }
+
+    @Test
+    void LIC3trueTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        // use `area` = 10 for testing purposes
+        input.parameters.area = 10;
+
+        // expected area = 12.5
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(0, 5),
+            new Point(5, 0)
+        };
+
+        assertTrue(ConditionsMetVector.LIC3(input, 0, 0));
+    }
+
+    @Test
+    void LIC3falseTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        // use `area` = 10 for testing purposes
+        input.parameters.area = 10;
+
+        // expected area = 2
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(0, 2),
+            new Point(2, 0)
+        };
+
+        assertFalse(ConditionsMetVector.LIC3(input, 0, 0));
+    }
+
     @Test
     void LIC4differentQuadrants() {
         Input input = new Input();
@@ -127,4 +162,70 @@ public class ConditionsMetVectorTest {
 		input.points = new Point[] { new Point(1, 2), new Point(3, 3), new Point(2, 4) };
 		assertTrue(ConditionsMetVector.LIC5(input));
 	}
+
+    @Test
+    void LIC10trueTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        // use `area` = 10 for testing purposes
+        input.parameters.area = 10;
+
+        input.parameters.e_points = 2;
+        input.parameters.f_points = 3;
+
+        // expected area = 12.5
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 5),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(5, 0)
+        };
+
+        assertTrue(ConditionsMetVector.LIC10(input));
+    }
+
+    @Test
+    void LIC10falseTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        // use `area` = 10 for testing purposes
+        input.parameters.area = 10;
+
+        input.parameters.e_points = 2;
+        input.parameters.f_points = 3;
+
+        // expected area = 2
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 2),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(2, 0)
+        };
+
+        assertFalse(ConditionsMetVector.LIC10(input));
+    }
+
+    @Test
+    void LIC10lengthTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        // number of points < 5
+        input.points = new Point[] {    
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 5),
+        };
+
+        assertFalse(ConditionsMetVector.LIC10(input));
+    }
 }
