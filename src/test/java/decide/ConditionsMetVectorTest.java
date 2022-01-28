@@ -445,7 +445,7 @@ public class ConditionsMetVectorTest {
         assertFalse(ConditionsMetVector.LIC12(input));
     }
 
-    // LIC 12 - Test 2
+    // LIC 12 - Test 3
     // Assert false if two datapoints seperated at K_points have a distance larger than length1
     // And two datapoints have distance larger than length2
     // Where the Length1 is 10
@@ -470,7 +470,7 @@ public class ConditionsMetVectorTest {
          assertFalse(ConditionsMetVector.LIC12(input));
      }
 
-     // LIC 12 - Test 2
+     // LIC 12 - Test 4
     // Assert false if two datapoints less than 3
     // Where the Length1 is 10
      // K_pts = 2
