@@ -7,39 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 public class ConditionsMetVectorTest {
-
-    // Assures that LIC3 returns true if any three consecutive points in `points` froms a triangle with area > `area`
-    @Test
-    void LIC3trueTest() {
-        Input input = new Input();
-        input.parameters = input.new Parameters();
-        // use `area` = 10 for testing purposes
-        input.parameters.area = 10;
-        // expected area = 12.5
-        input.points = new Point[] {    
-            new Point(0, 0),
-            new Point(0, 5),
-            new Point(5, 0)
-        };
-        assertTrue(ConditionsMetVector.LIC3(input));
-    }
-
-    // Assures that LIC3 returns false if no three consecutive `points` forms a triangle with area > `area`
-    @Test
-    void LIC3falseTest() {
-        Input input = new Input();
-        input.parameters = input.new Parameters();
-        // use `area` = 10 for testing purposes
-        input.parameters.area = 10;
-        // expected area = 2
-        input.points = new Point[] {
-            new Point(0, 0),
-            new Point(0, 2),
-            new Point(2, 0)
-        };
-        assertFalse(ConditionsMetVector.LIC3(input));
-    }
-
     @Test
     void LIC4differentQuadrants() {
         Input input = new Input();

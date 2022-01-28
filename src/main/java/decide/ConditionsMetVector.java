@@ -9,18 +9,6 @@ public class ConditionsMetVector {
         this.conditions[4] = LIC4(input);
     }
 
-    // LIC 3
-    // Returns true if there are three consecutive points in `input.points` that form a triangle with an
-    // area greater than `input.parameters.area`
-    public static boolean LIC3(Input input) {
-        for(int i = 0; i < input.points.length - 2; i++) {
-            if(Point.triangleArea(input.points[i], input.points[i + 1], input.points[i + 2]) > input.parameters.area) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     // LIC 4
     // Returns true if there are `Q` (read from input) consecutive data points
     // that lie in more than `QUADS` (read from input) quadrants.
