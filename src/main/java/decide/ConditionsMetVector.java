@@ -200,7 +200,25 @@ public class ConditionsMetVector {
         if(input.points.length < 5) { return false; }
         return LIC3(input, input.parameters.e_points, input.parameters.f_points);
     }
+    
+    // LIC 11
+    // Returns ture if there exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), 
+    // separated by exactly G_PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) 
+    // The condition is not met when NUMPOINTS < 3.
+    public static boolean LIC11(Input input){
 
+        // Base case if there are < 3 points
+        if(input.points.length < 3) return false;
+
+        // the inputs needed
+        int g_pts = input.parameters.g_points;
+        int numPoints = input.points.length;
+
+        for (int i = 0; i < numPoints-(g_pts+1); i++) {
+            if(input.points[i+g_pts+1].x < input.points[i].x) return true;    
+        }
+        return false;
+    }
     // LIC 12
     // Return true if two data points seperated by K_PTS have a distance greater than length1
     // and if there are two datapoints seperated by K_PTS that have a distance less than length2
