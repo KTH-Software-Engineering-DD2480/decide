@@ -7,6 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 public class ConditionsMetVectorTest {
+    // Shorthand for creating new point
+    private Point p(double x, double y) {
+        return new Point(x, y);
+    }
 
     // LIC 0 - Test 1
     // Assert true if there exist only two points that have a distance greater than 10
@@ -63,6 +67,49 @@ public class ConditionsMetVectorTest {
 
         //Assert
         assertFalse(ConditionsMetVector.LIC0(input));
+    }
+
+    // LIC1 - Test 1
+    // Assert that the largest possible triangle fits inside a circle of radius 1
+    // See: https://www.geogebra.org/calculator/agwc9tmw (A-B-C) for diagram
+    @Test
+    void LIC1_largest_triangle_to_fit() {
+        // Largest possible triangle that will fit in a circle of radius 1
+        Input input = new Input();
+        input.points = new Point[] {p(0, 0), p(Math.sqrt(3), 0), p(Math.sqrt(3)/2, 1.5)};
+        input.parameters = input.new Parameters();
+        input.parameters.radius1 = 1;
+        assertEquals(false, new ConditionsMetVector(input).LIC1(input));
+    }
+
+    // LIC1 - Test 2
+    // Assert that some edge cases fit inside circle of radius 1
+    @Test
+    void LIC1_edge_cases() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.radius1 = 1;
+        // Edge case: all points equal
+        input.points = new Point[] {p(0, 0), p(0, 0), p(0, 0)};
+        assertEquals(false, new ConditionsMetVector(input).LIC1(input));
+
+        // Edge case: all points collinear and unevenly spaced, but can fit inside optimal circle
+        input.points = new Point[] {p(0, 0), p(1, 0), p(10, 0)};
+        input.parameters.radius1 = 5;
+        assertEquals(false, new ConditionsMetVector(input).LIC1(input));
+    }
+
+    // LIC1 - Test 3
+    // Assert that last resort (non-optimized solution) works
+    @Test
+    void LIC1_non_optimized_case() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.radius1 = 1;
+        // Testing non-optimized case (neither optimization 1 or 2 works)
+        input.points = new Point[] {p(0.45, -0.45), p(1.3, -0.45), p(Math.sqrt(3)/2, 1.5)};
+        input.parameters.radius1 = 1;
+        assertEquals(true, new ConditionsMetVector(input).LIC1(input));
     }
 
     // LIC 2 - Test 1
