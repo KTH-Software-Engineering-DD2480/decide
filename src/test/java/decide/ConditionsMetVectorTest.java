@@ -79,7 +79,7 @@ public class ConditionsMetVectorTest {
         input.points = new Point[] {p(0, 0), p(Math.sqrt(3), 0), p(Math.sqrt(3)/2, 1.5)};
         input.parameters = input.new Parameters();
         input.parameters.radius1 = 1;
-        assertEquals(false, new ConditionsMetVector(input).LIC1(input));
+        assertEquals(false, ConditionsMetVector.LIC1(input, 0, 0));
     }
 
     // LIC1 - Test 2
@@ -91,12 +91,12 @@ public class ConditionsMetVectorTest {
         input.parameters.radius1 = 1;
         // Edge case: all points equal
         input.points = new Point[] {p(0, 0), p(0, 0), p(0, 0)};
-        assertEquals(false, new ConditionsMetVector(input).LIC1(input));
+        assertEquals(false, ConditionsMetVector.LIC1(input, 0, 0));
 
         // Edge case: all points collinear and unevenly spaced, but can fit inside optimal circle
         input.points = new Point[] {p(0, 0), p(1, 0), p(10, 0)};
         input.parameters.radius1 = 5;
-        assertEquals(false, new ConditionsMetVector(input).LIC1(input));
+        assertEquals(false, ConditionsMetVector.LIC1(input, 0, 0));
     }
 
     // LIC1 - Test 3
@@ -109,7 +109,7 @@ public class ConditionsMetVectorTest {
         // Testing non-optimized case (neither optimization 1 or 2 works)
         input.points = new Point[] {p(0.45, -0.45), p(1.3, -0.45), p(Math.sqrt(3)/2, 1.5)};
         input.parameters.radius1 = 1;
-        assertEquals(true, new ConditionsMetVector(input).LIC1(input));
+        assertEquals(true, ConditionsMetVector.LIC1(input, 0, 0));
     }
 
     // LIC 2 - Test 1
@@ -309,6 +309,7 @@ public class ConditionsMetVectorTest {
 
     }
 
+
     // Test for LIC 7
     @Test
     void test_LIC7(){
@@ -332,6 +333,26 @@ public class ConditionsMetVectorTest {
 
     }
 
+
+    // LIC8 - Test 1
+    // Assert that LIC8 correctly calls LIC1 (which it depends on)
+    @Test
+    void LIC8_non_optimized_case() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.radius1 = 1;
+        // Testing non-optimized case (neither optimization 1 or 2 works)
+        input.points = new Point[] {
+                p(0.45, -0.45), 
+                p(0, 0), p(1, 1), p(2, 2),
+                p(1.3, -0.45), 
+                p(0, 0), p(1, 1), p(2, 2),
+                p(Math.sqrt(3)/2, 1.5)};
+        input.parameters.radius1 = 1;
+        assertEquals(true, ConditionsMetVector.LIC1(input, 3, 3));
+        input.parameters.radius1 = 1.05;
+        assertEquals(false, ConditionsMetVector.LIC1(input, 3, 3));
+    }
 
     // LIC 9 - Test 1
     // Assert true if there exists three nodes seperated by Cpts and dpts that have an angle smaller than PI - Epsilon
