@@ -5,5 +5,23 @@ public class PreliminaryUnlockingMatrix {
 
     PreliminaryUnlockingMatrix(Input input, ConditionsMetVector cmv) {
         this.conditions = new boolean[15][15];
+        for (int row = 0; row < 15; row++) {
+            for (int col = row; col < 15; col++) {   // we only need to iterate over the upper triangle (cause symmetry)
+                if (input.lcm[row][col] == Input.LogicalOperator.NOT_USED) {
+                    this.conditions[row][col] = true;
+                    this.conditions[col][row] = true;
+                } else if (input.lcm[row][col] == Input.LogicalOperator.AND) {
+                    if (cmv.conditions[row] && cmv.conditions[col]) {
+                        this.conditions[row][col] = true;
+                        this.conditions[col][row] = true;
+                    }
+                } else { // OR
+                    if (cmv.conditions[row] || cmv.conditions[col]) {
+                        this.conditions[row][col] = true;
+                        this.conditions[col][row] = true;
+                    }
+                }
+            }
+        }
     }
 }
