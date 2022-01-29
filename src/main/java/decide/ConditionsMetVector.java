@@ -231,11 +231,32 @@ public class ConditionsMetVector {
         return numerator/denominator;
     }
 
+    // LIC 7
+    // Returns true if there exists at least one set of two data points separated by exactly K_PTS consecutive intervening
+    // points that are a distance greater than the length, LENGTH1, apart. The condition is not met when NUMPOINTS < 3.
+    public static boolean LIC7(Input input){
+
+        // Base case if there are < 3 points
+        if(input.points.length < 3) return false;
+
+        // the inputs needed
+        int k_pts = input.parameters.k_points;
+        double length1 = input.parameters.length1;
+        int numPoints = input.points.length;
+
+        for (int i = 0; i < numPoints-(k_pts+1); i++) {
+            // check if the euclidean distance between is greater than length1 
+            if(Math.sqrt(Math.pow((input.points[i+k_pts+1].x-input.points[i].x),2) + Math.pow((input.points[i+k_pts+1].y-input.points[i].y),2)) > length1) return true;    
+        }
+        return false;
+    }
+
     // LIC 8
     // Same as LIC 1 but the points are separated by A_PTS and B_PTS. Also `input.points.length > 5` must be true.
     public static boolean LIC8(Input input) {
         if (input.points.length < 5) return false;
         return LIC1(input, input.parameters.a_points, input.parameters.b_points);
+
     }
 
     // LIC 9
