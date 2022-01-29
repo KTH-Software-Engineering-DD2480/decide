@@ -27,11 +27,11 @@ public class ConditionsMetVector {
         return false;
     }
 
-    // Sets conditions[1] = true iff 3 consecutive points *cannot be contained within circle of radius "radius1"
-    public static boolean LIC1(Input input, int a_pts, int b_pts) {
+    // LIC 1
+    // Returns true if three consecutive points (separated by a_pts and b_pts) can fit inside (/can't fit inside if `inside` is false)
+    // of a circle with radius `radius`
+    public static boolean LIC1(Input input, int a_pts, int b_pts, double radius, boolean inside) {
         int sequence_length = a_pts + b_pts + 2;
-        // for (int i = 0; i < 98; i++) {
-        // Variable length input for more efficient testing
         for (int i = 0; i < input.points.length - sequence_length; i++) {
             Point first = input.points[i];
             Point second = input.points[i + 1 + a_pts];
@@ -42,52 +42,80 @@ public class ConditionsMetVector {
             double length2 = second.distance(third);
             double length3 = third.distance(first);
 
-            // Optimization 1:
-            // If any of the points are further appart than 2*radius1, the points can't fit in the circle
-            if (length1 > 2 * input.parameters.radius1
-                || length2 > 2 * input.parameters.radius1
-                || length3 > 2 * input.parameters.radius1) return true;
+            
+            if (!inside) {
+                // Optimization 1:
+                // If any of the points are further appart than 2 * radius, the points can't fit in the circle
+                if (length1 > 2 * radius
+                    || length2 > 2 * radius
+                    || length3 > 2 * radius) return true;
 
-            // Optimization 2:
-            // If the circumference of the triangle is larger than: 3 * sqrt(3 * radius1^2), the points can't fit in the circle
-            // See here for explanation: https://1drv.ms/u/s!Ap4Pha57tInRiZpVrpTWePByWzrrhw?e=B9XD6y
-            if (length1 + length2 + length3 > 3 * Math.sqrt(3 * input.parameters.radius1 * input.parameters.radius1)) 
-                return true;
+                // Optimization 2:
+                // If the circumference of the triangle is larger than: 3 * sqrt(3 * radius^2), the points can't fit in the circle
+                // See here for explanation: https://1drv.ms/u/s!Ap4Pha57tInRiZpVrpTWePByWzrrhw?e=B9XD6y
+                if (length1 + length2 + length3 > 3 * Math.sqrt(3 * radius * radius)) 
+                    return true;
+            }
 
             // Angular sweep solution, inspired by: https://www.geeksforgeeks.org/angular-sweep-maximum-points-can-enclosed-circle-given-radius/
-            // For all but one case (handled by optimization 2), only two points are of interest. Imagine a circle of radius "radius1"
+            // For all but one case (handled by optimization 2), only two points are of interest. Imagine a circle of radius "radius"
             // with one of the two points on it's circumference, then for some span of an angle where the circle is rotated about the
             // point with respect to the x-axis, the other points are either within or outside the circle. If the spans for the other two points
             // overlap, the points can fit in the circle. This check needs only be done for two of the three considered points.
 
             // Checking point 1
             double A = Math.atan((first.y-second.y)/(first.x-second.x));
-            double B = Math.acos(first.distance(second) / (2 * input.parameters.radius1));
+            double B = Math.acos(first.distance(second) / (2 * radius));
             double alpha1 = A - B;
             double beta1 = A + B;
 
             A = Math.atan((first.y-third.y)/(first.x-third.x));
-            B = Math.acos(first.distance(third) / (2 * input.parameters.radius1));
+            B = Math.acos(first.distance(third) / (2 * radius));
             double alpha2 = A - B;
             double beta2 = A + B;
 
-            // If the spans don't overlap, we must check the second point
-            if (alpha1 > beta2 || beta1 < alpha2) {
-                // Checking point 2
+            if (!inside) {
+                // We're trying to see if the points *can't* fit in the circle
+                // If the spans don't overlap, we must check the second point
+                if (alpha1 > beta2 || beta1 < alpha2) {
+                    // Checking point 2
+                    A = Math.atan((second.y-third.y)/(second.x-third.x));
+                    B = Math.acos(second.distance(third) / (2 * radius));
+                    alpha1 = A - B;
+                    beta1 = A + B;
+
+                    A = Math.atan((second.y-first.y)/(second.x-first.x));
+                    B = Math.acos(second.distance(first) / (2 * radius));
+                    alpha2 = A - B;
+                    beta2 = A + B;
+
+                    // If the spans don't overlap then the circle can't contain them
+                    if (alpha1 > beta2 || beta1 < alpha2) return true;
+                }
+            } else {
+                // We're trying to see if the points *can* fit in the circle
+                // If the spans do overlap then the circle can contain them and we can return true
+                if ((alpha2 < beta1 && beta1 < beta2)
+                    || (alpha2 < alpha1 && alpha1 < beta2)) return true;
+                // The spans don't overlap...
+                // So check the other point
                 A = Math.atan((second.y-third.y)/(second.x-third.x));
-                B = Math.acos(second.distance(third) / (2 * input.parameters.radius1));
+                B = Math.acos(second.distance(third) / (2 * radius));
                 alpha1 = A - B;
                 beta1 = A + B;
 
                 A = Math.atan((second.y-first.y)/(second.x-first.x));
-                B = Math.acos(second.distance(first) / (2 * input.parameters.radius1));
+                B = Math.acos(second.distance(first) / (2 * radius));
                 alpha2 = A - B;
                 beta2 = A + B;
 
-                // If the spans don't overlap then the circle can't contain them
-                if (alpha1 > beta2 || beta1 < alpha2) return true;
+                // If these spans overlap then the circle can contain them
+                if ((alpha2 < beta1 && beta1 < beta2)
+                    || (alpha2 < alpha1 && alpha1 < beta2)) return true;
             }
+            // These points couldn't satisfy the conditions, so try the next ones
         }
+        // None of the points could satisfy the conditions, so return false
         return false;
     }
 
@@ -235,7 +263,7 @@ public class ConditionsMetVector {
     // Same as LIC 1 but the points are separated by A_PTS and B_PTS. Also `input.points.length > 5` must be true.
     public static boolean LIC8(Input input) {
         if (input.points.length < 5) return false;
-        return LIC1(input, input.parameters.a_points, input.parameters.b_points);
+        return LIC1(input, input.parameters.a_points, input.parameters.b_points, input.parameters.radius1, false);
     }
 
     // LIC 9
@@ -287,6 +315,7 @@ public class ConditionsMetVector {
         }
         return false;
     }
+
     // LIC 12
     // Return true if two data points seperated by K_PTS have a distance greater than length1
     // and if there are two datapoints seperated by K_PTS that have a distance less than length2
@@ -314,5 +343,17 @@ public class ConditionsMetVector {
             return true;
         }
         return false;
+    }
+
+    // LIC 13
+    // Return true if there exists at least one set of three data points separated by exactly `a_points` and `b_points`
+    // that *cannot* be contained inside a circle with radius `input.parameters.radius1` 
+    // AND 
+    // -''- *can* -''- `input.parameters.radius2`
+    // The condition is not met when `input.points.length` < 5
+    public static boolean LIC13(Input input) {
+        if(input.points.length < 5) return false;
+        return LIC1(input, input.parameters.a_points, input.parameters.b_points, input.parameters.radius1, false)
+            && LIC1(input, input.parameters.a_points, input.parameters.b_points, input.parameters.radius2, true);
     }
 }
