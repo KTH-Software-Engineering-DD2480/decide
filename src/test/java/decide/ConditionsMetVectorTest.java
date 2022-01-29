@@ -263,7 +263,7 @@ public class ConditionsMetVectorTest {
         // A point on the line should result in 0
         assertEquals(0, ConditionsMetVector.distance(new Point(2, 2), new Point(0,0), new Point(1,1)));
  
-    }s
+    }
 
     // LIC 9 - Test 1
     // Assert true if there exists three nodes seperated by Cpts and dpts that have an angle smaller than PI - Epsilon
