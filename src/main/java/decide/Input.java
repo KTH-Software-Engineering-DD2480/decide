@@ -24,7 +24,7 @@ public class Input {
         OR,
     }
 
-    public class Parameters {
+    public static class Parameters {
         public double length1;     // Length in LICs 0, 7, 12
         public double radius1;     // Radius in LICs 1, 8, 13
         public double epsilon1;    // Deviation from PI in LICs 2, 9
