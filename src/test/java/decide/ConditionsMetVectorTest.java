@@ -223,6 +223,48 @@ public class ConditionsMetVectorTest {
 		assertTrue(ConditionsMetVector.LIC5(input));
 	}
 
+
+    
+    // Test for LIC 6
+    @Test
+    void test_LIC6() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.n_points = 3;
+        input.parameters.dist = 3;
+
+        // test the base case
+        input.points = new Point[]{new Point(0, 0),new Point(1, 1)};
+        assertFalse(ConditionsMetVector.LIC6(input));
+
+        // positive test with different start and end point
+        input.points = new Point[] { new Point(1, 2), new Point(6, 6), new Point(1,1), new Point(0, 6)};
+		    assertTrue(ConditionsMetVector.LIC6(input));
+
+        // Negative test with different start and end point
+        input.points = new Point[] { new Point(0, 0), new Point(1, 1), new Point(2, 2), new Point(3,3)};
+        assertFalse(ConditionsMetVector.LIC6(input));
+
+        // positive test with the same start and end point
+        input.points = new Point[] { new Point(1, 2), new Point(2, 2), new Point(10,10), new Point(1, 2)};
+        assertTrue(ConditionsMetVector.LIC6(input));
+
+            // negative test with the same start and end point
+        input.points = new Point[] { new Point(1, 2), new Point(1, 1), new Point(2,2), new Point(1, 2)};
+        assertFalse(ConditionsMetVector.LIC6(input));
+	}
+
+
+    @Test
+    void distance() {
+        // Make sure that the computed distance is correct
+        assertEquals(1.2, ConditionsMetVector.distance(new Point(0, 1.5), new Point(2,0), new Point(0,0)));
+
+        // A point on the line should result in 0
+        assertEquals(0, ConditionsMetVector.distance(new Point(2, 2), new Point(0,0), new Point(1,1)));
+ 
+    }
+
     // LIC 9 - Test 1
     // Assert true if there exists three nodes seperated by Cpts and dpts that have an angle smaller than PI - Epsilon
     // Where epsilon is PI/2 and cPts = 2 and dPts=3
@@ -250,7 +292,6 @@ public class ConditionsMetVectorTest {
         //Assert
         assertTrue(ConditionsMetVector.LIC9(input));
     }
-
     // LIC 9 - Test 2
     // Assert false if there exists three nodes seperated by Cpts and dpts that have an angle larger than PI - Epsilon
     // Where epsilon is PI/2 and cPts = 2 and dPts=3
