@@ -309,6 +309,30 @@ public class ConditionsMetVectorTest {
 
     }
 
+    // Test for LIC 7
+    @Test
+    void test_LIC7(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.k_points = 3;
+        input.parameters.length1 = 2;
+        
+        // test the base case with less than 3 points
+        input.points = new Point[]{new Point(0, 0),new Point(1, 1)};
+        assertFalse(ConditionsMetVector.LIC7(input));
+
+        // positive test with 3 consecutive intervening points and a distance greater than 2
+        input.points = new Point[]{new Point(-1, -1),new Point(1, 1), new Point(2,2), new Point(3,3), new Point(4,4)};
+        assertTrue(ConditionsMetVector.LIC7(input));
+
+        // negative test with 3 consecutive intervening points and a distance less than 2
+        input.points = new Point[]{new Point(0, 0),new Point(1, 1), new Point(-1,-1), new Point(0,1), new Point(-1,0)};
+        assertFalse(ConditionsMetVector.LIC7(input));
+
+
+    }
+
+
     // LIC 9 - Test 1
     // Assert true if there exists three nodes seperated by Cpts and dpts that have an angle smaller than PI - Epsilon
     // Where epsilon is PI/2 and cPts = 2 and dPts=3
