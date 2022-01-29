@@ -498,6 +498,28 @@ public class ConditionsMetVectorTest {
         assertFalse(ConditionsMetVector.LIC10(input));
     }
 
+    // Test for LIC 11
+    @Test
+    void test_LIC11(){
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.g_points = 3;
+        
+        // test the base case with less than 3 points
+        input.points = new Point[]{new Point(0, 0),new Point(1, 1)};
+        assertFalse(ConditionsMetVector.LIC11(input));
+
+        // positive test with 3 consecutive intervening points
+        input.points = new Point[]{new Point(5, 4),new Point(1, 1), new Point(2,2), new Point(3,3), new Point(2,3)};
+        assertTrue(ConditionsMetVector.LIC11(input));
+
+        // negative test
+        input.points = new Point[]{new Point(0, 4),new Point(1, 1), new Point(2,2), new Point(3,3), new Point(4,3), new Point(5,6)};
+        assertFalse(ConditionsMetVector.LIC11(input));
+
+
+    }
+
     // LIC 12 - Test 1
     // Assert true if two datapoints seperated at K_points have a distance greater than length1
     // And two datapoints seperated at k_points have distance less than length2
