@@ -28,13 +28,14 @@ public class ConditionsMetVector {
     }
 
     // Sets conditions[1] = true iff 3 consecutive points *cannot be contained within circle of radius "radius1"
-    public boolean LIC1(Input input) {
+    public static boolean LIC1(Input input, int a_pts, int b_pts) {
+        int sequence_length = a_pts + b_pts + 2;
         // for (int i = 0; i < 98; i++) {
         // Variable length input for more efficient testing
-        for (int i = 0; i < input.points.length - 2; i++) {
+        for (int i = 0; i < input.points.length - sequence_length; i++) {
             Point first = input.points[i];
-            Point second = input.points[i + 1];
-            Point third = input.points[i + 2];
+            Point second = input.points[i + 1 + a_pts];
+            Point third = input.points[i + 2 + a_pts + b_pts];
 
             // Optimization prerequisites
             double length1 = first.distance(second);
@@ -45,18 +46,13 @@ public class ConditionsMetVector {
             // If any of the points are further appart than 2*radius1, the points can't fit in the circle
             if (length1 > 2 * input.parameters.radius1
                 || length2 > 2 * input.parameters.radius1
-                || length3 > 2 * input.parameters.radius1) {
-                this.conditions[1] = true;
-                return true;
-            }
+                || length3 > 2 * input.parameters.radius1) return true;
 
             // Optimization 2:
             // If the circumference of the triangle is larger than: 3 * sqrt(3 * radius1^2), the points can't fit in the circle
             // See here for explanation: https://1drv.ms/u/s!Ap4Pha57tInRiZpVrpTWePByWzrrhw?e=B9XD6y
-            if (length1 + length2 + length3 > 3 * Math.sqrt(3 * input.parameters.radius1 * input.parameters.radius1)) {
-                this.conditions[1] = true;
+            if (length1 + length2 + length3 > 3 * Math.sqrt(3 * input.parameters.radius1 * input.parameters.radius1)) 
                 return true;
-            }
 
             // Angular sweep solution, inspired by: https://www.geeksforgeeks.org/angular-sweep-maximum-points-can-enclosed-circle-given-radius/
             // For all but one case (handled by optimization 2), only two points are of interest. Imagine a circle of radius "radius1"
@@ -89,10 +85,7 @@ public class ConditionsMetVector {
                 beta2 = A + B;
 
                 // If the spans don't overlap then the circle can't contain them
-                if (alpha1 > beta2 || beta1 < alpha2) {
-                    this.conditions[1] = true;
-                    return true;
-                }
+                if (alpha1 > beta2 || beta1 < alpha2) return true;
             }
         }
         return false;
@@ -236,6 +229,13 @@ public class ConditionsMetVector {
         double denominator = Math.sqrt(Math.pow(a,2) + Math.pow(b, 2));
 
         return numerator/denominator;
+    }
+
+    // LIC 8
+    // Same as LIC 1 but the points are separated by A_PTS and B_PTS. Also `input.points.length > 5` must be true.
+    public static boolean LIC8(Input input) {
+        if (input.points.length < 5) return false;
+        return LIC1(input, input.parameters.a_points, input.parameters.b_points);
     }
 
     // LIC 9
