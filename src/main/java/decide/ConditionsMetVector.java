@@ -16,13 +16,100 @@ public class ConditionsMetVector {
     }
 
     // LIC 0
-    // Return true if there are two consecutive points in "input.points" that have a distance 
+    // Return true if there are two consecutive points in "input.points" that have a distance
     // greater then "input.parameters.length1"
-
     public static boolean LIC0(Input input) {
         for (int i = 0; i < input.points.length - 1; i++) {
             if (input.points[i].distance(input.points[i+1]) > input.parameters.length1) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    // Sets conditions[1] = true iff 3 consecutive points *cannot be contained within circle of radius "radius1"
+    public boolean LIC1(Input input) {
+        // for (int i = 0; i < 98; i++) {
+        // Variable length input for more efficient testing
+        for (int i = 0; i < input.points.length - 2; i++) {
+            Point first = input.points[i];
+            Point second = input.points[i + 1];
+            Point third = input.points[i + 2];
+
+            // Optimization prerequisites
+            double length1 = first.distance(second);
+            double length2 = second.distance(third);
+            double length3 = third.distance(first);
+
+            // Optimization 1:
+            // If any of the points are further appart than 2*radius1, the points can't fit in the circle
+            if (length1 > 2 * input.parameters.radius1
+                || length2 > 2 * input.parameters.radius1
+                || length3 > 2 * input.parameters.radius1) {
+                this.conditions[1] = true;
+                return true;
+            }
+
+            // Optimization 2:
+            // If the circumference of the triangle is larger than: 3 * sqrt(3 * radius1^2), the points can't fit in the circle
+            // See here for explanation: https://1drv.ms/u/s!Ap4Pha57tInRiZpVrpTWePByWzrrhw?e=B9XD6y
+            if (length1 + length2 + length3 > 3 * Math.sqrt(3 * input.parameters.radius1 * input.parameters.radius1)) {
+                this.conditions[1] = true;
+                return true;
+            }
+
+            // Angular sweep solution, inspired by: https://www.geeksforgeeks.org/angular-sweep-maximum-points-can-enclosed-circle-given-radius/
+            // For all but one case (handled by optimization 2), only two points are of interest. Imagine a circle of radius "radius1"
+            // with one of the two points on it's circumference, then for some span of an angle where the circle is rotated about the
+            // point with respect to the x-axis, the other points are either within or outside the circle. If the spans for the other two points
+            // overlap, the points can fit in the circle. This check needs only be done for two of the three considered points.
+
+            // Checking point 1
+            double A = Math.atan((first.y-second.y)/(first.x-second.x));
+            double B = Math.acos(first.distance(second) / (2 * input.parameters.radius1));
+            double alpha1 = A - B;
+            double beta1 = A + B;
+
+            A = Math.atan((first.y-third.y)/(first.x-third.x));
+            B = Math.acos(first.distance(third) / (2 * input.parameters.radius1));
+            double alpha2 = A - B;
+            double beta2 = A + B;
+
+            // If the spans don't overlap, we must check the second point
+            if (alpha1 > beta2 || beta1 < alpha2) {
+                // Checking point 2
+                A = Math.atan((second.y-third.y)/(second.x-third.x));
+                B = Math.acos(second.distance(third) / (2 * input.parameters.radius1));
+                alpha1 = A - B;
+                beta1 = A + B;
+
+                A = Math.atan((second.y-first.y)/(second.x-first.x));
+                B = Math.acos(second.distance(first) / (2 * input.parameters.radius1));
+                alpha2 = A - B;
+                beta2 = A + B;
+
+                // If the spans don't overlap then the circle can't contain them
+                if (alpha1 > beta2 || beta1 < alpha2) {
+                    this.conditions[1] = true;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // LIC 2
+    // Return True if there exists three consecutive data points which form an angle such that
+    // angle < (PI - EPSILON) or angle > (PI + EPSILON) AND
+    // The second of the three consecutive points is always the vertex of the angle
+    public static boolean LIC2(Input input){
+        double angle;
+        for (int i = 0; i < input.points.length - 2; i++ ) {
+            if (!input.points[i+1].coincides(input.points[i]) && !input.points[i+1].coincides(input.points[i+2])) {
+                angle = Point.angle(input.points[i], input.points[i+1], input.points[i+2]);
+                if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
+                    return true;
+                }
             }
         }
         return false;
@@ -36,24 +123,6 @@ public class ConditionsMetVector {
         for(int i = 0; i < input.points.length - sequence_length; i++) {
             if(Point.triangleArea(input.points[i], input.points[i + 1 + e_points], input.points[i + 2 + e_points + f_points]) > input.parameters.area) {
                 return true;
-            }
-        }
-        return false;
-    }
-
-    //LIC 2
-    // Return True if there exists three consecutive data points which form an angle such that
-    // angle < (PI - EPSILON) or angle > (PI + EPSILON) AND
-    // The second of the three consecutive points is always the vertex of the angle
-    
-    public static boolean LIC2(Input input){
-        double angle;
-        for (int i = 0; i < input.points.length - 2; i++ ) {
-            if (!input.points[i+1].coincides(input.points[i]) && !input.points[i+1].coincides(input.points[i+2])) {
-                angle = Point.angle(input.points[i], input.points[i+1], input.points[i+2]);
-                if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
-                    return true;
-                }
             }
         }
         return false;
@@ -98,9 +167,9 @@ public class ConditionsMetVector {
         return 3;
     }
 
-    // LIC 5 
+    // LIC 5
     // Returns true if there exists at least one set of two consecutive data points, (X[i],Y[i]) and (X[j],Y[j]), such
-    // that X[j] - X[i] < 0. (where i = j-1)   
+    // that X[j] - X[i] < 0. (where i = j-1)
     public static boolean LIC5(Input input){
         for (int i = 0; i < input.points.length - 1; i++) {
             if(input.points[i+1].x < input.points[i].x){
@@ -110,11 +179,10 @@ public class ConditionsMetVector {
         return false;
     }
 
-
     // LIC 6
-    // Returns true if there exists at least one set of N_PTS consecutive data points such that at least one of the points lies a distance greater 
-    // than DIST from the line joining the first and last of these N_PTS points. If the first and last points of these N_PTS are identical, 
-    // then the calculated distance to compare with DIST will be the distance from the coincident point to all other points of the N_PTS consecutive points. 
+    // Returns true if there exists at least one set of N_PTS consecutive data points such that at least one of the points lies a distance greater
+    // than DIST from the line joining the first and last of these N_PTS points. If the first and last points of these N_PTS are identical,
+    // then the calculated distance to compare with DIST will be the distance from the coincident point to all other points of the N_PTS consecutive points.
     // The condition is not met when NUMPOINTS < 3.
     public static boolean LIC6(Input input){
 
@@ -130,7 +198,7 @@ public class ConditionsMetVector {
         Point[] consecutive;
 
         for (int i = 0; i < numPoints - (n_pts - 1); i++) {
-            // define the set of consecutive data points 
+            // define the set of consecutive data points
             consecutive = Arrays.copyOfRange(input.points, i, i+n_pts);
 
             // if the first and last points are identical
@@ -139,13 +207,13 @@ public class ConditionsMetVector {
                 for(Point point : consecutive){
                     // compute the euclidena distance and compare with dist
                     if(Math.sqrt(Math.pow((consecutive[0].x-point.x),2) + Math.pow((consecutive[0].y-point.y),2)) > dist) return true;
-                    
+
                 }
             }
 
             // if the first and last points are different
-            else{
-                
+            else {
+
                 // compute the distance from each point to the line defined by the first and the last point
                 for(Point point : consecutive){
                     if(distance(consecutive[0], consecutive[consecutive.length-1], point) > dist) return true;
@@ -157,7 +225,7 @@ public class ConditionsMetVector {
 
     // Computes the distance between a line, defined by start and end, and the point p.
     static double distance(Point start, Point end, Point p){
-        
+
         // The numerator of the formula is |a(p_x) + b(p_y) + c| with the line ax + by + c = 0
         double a = start.y - end.y;
         double b = end.x - start.x;
@@ -169,9 +237,9 @@ public class ConditionsMetVector {
 
         return numerator/denominator;
     }
-  
+
     // LIC 9
-    // Return true if ange of three points seperated by C_PTS and D_PTS has 
+    // Return true if ange of three points seperated by C_PTS and D_PTS has
     // angle smaller than Pi - epsilon or bigger than pi + epsilon
     public static boolean LIC9(Input input){
         if (input.points.length < 5) {
@@ -179,7 +247,7 @@ public class ConditionsMetVector {
         }
         int seperation = input.parameters.c_points + input.parameters.d_points;
         double angle;
-        
+
         for (int i=0; i < input.points.length - seperation - 2; i++ ){
             if (!input.points[i+input.parameters.c_points+1].coincides(input.points[i]) && !input.points[i+input.parameters.c_points+1].coincides(input.points[i+seperation+2])) {
                 angle = Point.angle(input.points[i], input.points[i+input.parameters.c_points+1], input.points[i+seperation+2]);
@@ -188,7 +256,7 @@ public class ConditionsMetVector {
                 }
             }
         }
-        
+
         return false;
     }
 
@@ -205,7 +273,7 @@ public class ConditionsMetVector {
     // Return true if two data points seperated by K_PTS have a distance greater than length1
     // and if there are two datapoints seperated by K_PTS that have a distance less than length2
     public static boolean LIC12(Input input){
-        boolean condition1 = false; 
+        boolean condition1 = false;
         boolean condition2 = false;
 
         if (input.points.length < 3) {
@@ -226,78 +294,6 @@ public class ConditionsMetVector {
 
         if (condition1 && condition2) {
             return true;
-        }
-        return false;
-
-    }
-
-    // Sets conditions[1] = true iff 3 consecutive points *cannot be contained within circle of radius "radius1"
-    public boolean LIC1(Input input) {
-        // for (int i = 0; i < 98; i++) {
-        // Variable length input for more efficient testing
-        for (int i = 0; i < input.points.length - 2; i++) {
-            Point first = input.points[i];
-            Point second = input.points[i + 1];
-            Point third = input.points[i + 2];
-            
-            // Optimization prerequisites
-            double length1 = first.distance(second);
-            double length2 = second.distance(third);
-            double length3 = third.distance(first);
-
-            // Optimization 1:
-            // If any of the points are further appart than 2*radius1, the points can't fit in the circle
-            if (length1 > 2 * input.parameters.radius1 
-                || length2 > 2 * input.parameters.radius1 
-                || length3 > 2 * input.parameters.radius1) {
-                this.conditions[1] = true;
-                return true;
-            }
-
-            // Optimization 2:
-            // If the circumference of the triangle is larger than: 3 * sqrt(3 * radius1^2), the points can't fit in the circle
-            // See here for explanation: https://1drv.ms/u/s!Ap4Pha57tInRiZpVrpTWePByWzrrhw?e=B9XD6y
-            if (length1 + length2 + length3 > 3 * Math.sqrt(3 * input.parameters.radius1 * input.parameters.radius1)) {
-                this.conditions[1] = true;
-                return true;
-            }
-
-            // Angular sweep solution, inspired by: https://www.geeksforgeeks.org/angular-sweep-maximum-points-can-enclosed-circle-given-radius/
-            // For all but one case (handled by optimization 2), only two points are of interest. Imagine a circle of radius "radius1"
-            // with one of the two points on it's circumference, then for some span of an angle where the circle is rotated about the 
-            // point with respect to the x-axis, the other points are either within or outside the circle. If the spans for the other two points
-            // overlap, the points can fit in the circle. This check needs only be done for two of the three considered points.
-            
-            // Checking point 1
-            double A = Math.atan((first.y-second.y)/(first.x-second.x));
-            double B = Math.acos(first.distance(second) / (2 * input.parameters.radius1));
-            double alpha1 = A - B;
-            double beta1 = A + B;
-
-            A = Math.atan((first.y-third.y)/(first.x-third.x));
-            B = Math.acos(first.distance(third) / (2 * input.parameters.radius1));
-            double alpha2 = A - B;
-            double beta2 = A + B;
-            
-            // If the spans don't overlap, we must check the second point
-            if (alpha1 > beta2 || beta1 < alpha2) {
-                // Checking point 2
-                A = Math.atan((second.y-third.y)/(second.x-third.x));
-                B = Math.acos(second.distance(third) / (2 * input.parameters.radius1));
-                alpha1 = A - B;
-                beta1 = A + B;
-
-                A = Math.atan((second.y-first.y)/(second.x-first.x));
-                B = Math.acos(second.distance(first) / (2 * input.parameters.radius1));
-                alpha2 = A - B;
-                beta2 = A + B;
-
-                // If the spans don't overlap then the circle can't contain them
-                if (alpha1 > beta2 || beta1 < alpha2) {
-                    this.conditions[1] = true;
-                    return true;
-                }
-            }
         }
         return false;
     }
