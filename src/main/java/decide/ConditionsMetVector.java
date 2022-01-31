@@ -8,6 +8,11 @@ public class ConditionsMetVector {
     // Launch Interceptor Conditions
     public boolean[] conditions;
 
+    // This is a constructor for testing purposes, don't use in practice
+    ConditionsMetVector(boolean[] test) {
+        this.conditions = test;
+    }
+
     ConditionsMetVector(Input input) {
         this.conditions = new boolean[15];
         this.conditions[0] = LIC0(input);

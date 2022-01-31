@@ -14,41 +14,16 @@ public class PreliminaryUnlockingMatrixTest {
     private static final Input.LogicalOperator A = Input.LogicalOperator.AND;
     private static final Input.LogicalOperator O = Input.LogicalOperator.OR;
 
-    // Setup input for all true LIC conditions and run ConditionsMetVector(input), then setup a LCM and run 
-    // PreliminaryUnlockingMatrix(input, cmv) lastly assert that the PUM's conditions are correct (ie all true 
+    // Create a cmv with all true for testing the functionality of the PUM calculator. Run the
+    // PreliminaryUnlockingMatrix(input, cmv) and then assert that the PUM's conditions are correct (ie all true 
     // since AND, OR or NOT_USED all equate to true for only true inputs).
     @Test
     void PUMassertsCorrectly() {
-        Input input = new Input();
-
-        // If adding lines, do *not* edit the already existing ones as this may cause others LICs to not evaluate true
-        input.points = new Point[] {
-                // LIC0
-            p(0.45, -0.45), p(42, 4444), p(1.3, -0.45), p(1337, 420), p(Math.sqrt(3)/2, 1.5),   // LIC1, LIC8, LIC13
-                // LIC2
-                // LIC3
-                // LIC4
-                // LIC5...
-            p(0, 0), p(69, 96), p(Math.sqrt(3), 0), p(123, 456), p(Math.sqrt(3)/2, 1.5),    // LIC13-continued
-        };
-
-        input.parameters = input.new Parameters();
-        // LIC0
-
-        // LIC1, LIC8, LIC13
-        input.parameters.radius1 = 1;
-        input.parameters.a_points = 1;
-        input.parameters.b_points = 1;
-        input.parameters.radius2 = 1;
-
-        // LIC2 ...
-        // .
-        // .
-        // .
-
-        // Setup the ConditionsMetVector
-        ConditionsMetVector cmv = new ConditionsMetVector(input);
+        // Setup the *test* ConditionsMetVector
+        boolean[] allTrue = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
+        ConditionsMetVector cmv = new ConditionsMetVector(allTrue);
         
+        Input input = new Input();
         // Setup the symmetric Logical Connector Matrix, values are arbritrary (any A could equally well be O)
         input.lcm = new Input.LogicalOperator[][] {
             {A, O, O, A, A, N, A, A, O, A, A, A, O, O, N},
