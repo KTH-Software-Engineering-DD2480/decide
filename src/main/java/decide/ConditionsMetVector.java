@@ -16,8 +16,20 @@ public class ConditionsMetVector {
     ConditionsMetVector(Input input) {
         this.conditions = new boolean[15];
         this.conditions[0] = LIC0(input);
+        this.conditions[1] = LIC1(input);
         this.conditions[2] = LIC2(input);
+        this.conditions[3] = LIC3(input);
         this.conditions[4] = LIC4(input);
+        this.conditions[5] = LIC5(input);
+        this.conditions[6] = LIC6(input);
+        this.conditions[7] = LIC7(input);
+        this.conditions[8] = LIC8(input);
+        this.conditions[9] = LIC9(input);
+        this.conditions[10] = LIC10(input);
+        this.conditions[11] = LIC11(input);
+        this.conditions[12] = LIC12(input);
+        this.conditions[13] = LIC13(input);
+        this.conditions[14] = LIC14(input);
     }
 
     // LIC 0
@@ -30,6 +42,12 @@ public class ConditionsMetVector {
             }
         }
         return false;
+    }
+
+    // LIC 1
+    // Wrapper for LIC1 with many params
+    public static boolean LIC1(Input input) {
+        return LIC1(input, input.parameters.a_points, input.parameters.b_points, input.parameters.radius1, false);
     }
 
     // LIC 1
@@ -47,7 +65,7 @@ public class ConditionsMetVector {
             double length2 = second.distance(third);
             double length3 = third.distance(first);
 
-            
+
             if (!inside) {
                 // Optimization 1:
                 // If any of the points are further appart than 2 * radius, the points can't fit in the circle
@@ -58,7 +76,7 @@ public class ConditionsMetVector {
                 // Optimization 2:
                 // If the circumference of the triangle is larger than: 3 * sqrt(3 * radius^2), the points can't fit in the circle
                 // See here for explanation: https://1drv.ms/u/s!Ap4Pha57tInRiZpVrpTWePByWzrrhw?e=B9XD6y
-                if (length1 + length2 + length3 > 3 * Math.sqrt(3 * radius * radius)) 
+                if (length1 + length2 + length3 > 3 * Math.sqrt(3 * radius * radius))
                     return true;
             }
 
@@ -139,6 +157,12 @@ public class ConditionsMetVector {
             }
         }
         return false;
+    }
+
+    // LIC 3
+    // Wrapper for LIC3 with many params
+    public static boolean LIC3(Input input) {
+        return LIC3(input, input.parameters.e_points, input.parameters.f_points, false);
     }
 
     // LIC 3
@@ -285,8 +309,8 @@ public class ConditionsMetVector {
         int numPoints = input.points.length;
 
         for (int i = 0; i < numPoints-(k_pts+1); i++) {
-            // check if the euclidean distance between is greater than length1 
-            if(Math.sqrt(Math.pow((input.points[i+k_pts+1].x-input.points[i].x),2) + Math.pow((input.points[i+k_pts+1].y-input.points[i].y),2)) > length1) return true;    
+            // check if the euclidean distance between is greater than length1
+            if(Math.sqrt(Math.pow((input.points[i+k_pts+1].x-input.points[i].x),2) + Math.pow((input.points[i+k_pts+1].y-input.points[i].y),2)) > length1) return true;
         }
         return false;
     }
@@ -328,10 +352,10 @@ public class ConditionsMetVector {
         if(input.points.length < 5) return false;
         return LIC3(input, input.parameters.e_points, input.parameters.f_points, false);
     }
-    
+
     // LIC 11
-    // Returns ture if there exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), 
-    // separated by exactly G_PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) 
+    // Returns ture if there exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]),
+    // separated by exactly G_PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j )
     // The condition is not met when NUMPOINTS < 3.
     public static boolean LIC11(Input input){
 
@@ -343,7 +367,7 @@ public class ConditionsMetVector {
         int numPoints = input.points.length;
 
         for (int i = 0; i < numPoints-(g_pts+1); i++) {
-            if(input.points[i+g_pts+1].x < input.points[i].x) return true;    
+            if(input.points[i+g_pts+1].x < input.points[i].x) return true;
         }
         return false;
     }
@@ -379,8 +403,8 @@ public class ConditionsMetVector {
 
     // LIC 13
     // Return true if there exists at least one set of three data points separated by exactly `a_points` and `b_points`
-    // that *cannot* be contained inside a circle with radius `input.parameters.radius1` 
-    // AND 
+    // that *cannot* be contained inside a circle with radius `input.parameters.radius1`
+    // AND
     // -''- *can* -''- `input.parameters.radius2`
     // The condition is not met when `input.points.length` < 5
     public static boolean LIC13(Input input) {
@@ -392,10 +416,10 @@ public class ConditionsMetVector {
     // LIC 14
     // Returns true if there exists at least one set of three data points separated by exactly `e_points` and `f_points`
     // consecutive intervening points, respectively, that are the vertices of a triangle with area greater
-    // than `input.parameters.area`. In additions, there exists at least one set of three data points separated 
-    // by exactly `e_points` and `f_points` consecutive intervening points (could be the same points as just mentioned, or different), 
+    // than `input.parameters.area`. In additions, there exists at least one set of three data points separated
+    // by exactly `e_points` and `f_points` consecutive intervening points (could be the same points as just mentioned, or different),
     // respectively, that are the vertices of a triangle with area less than `input.parameters.area2`.
-    // The condition is not met when `input.points.length` < 5 
+    // The condition is not met when `input.points.length` < 5
     public static boolean LIC14(Input input) {
         if(input.points.length < 5) return false;
         return LIC3(input, input.parameters.e_points, input.parameters.f_points, true);
