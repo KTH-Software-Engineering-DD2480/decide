@@ -3,6 +3,10 @@ package decide;
 public class PreliminaryUnlockingMatrix {
     public boolean[][] conditions;
 
+    PreliminaryUnlockingMatrix(boolean[][] initialConditions) {
+        this.conditions = initialConditions;
+    }
+
     PreliminaryUnlockingMatrix(Input input, ConditionsMetVector cmv) {
         this.conditions = new boolean[15][15];
         for (int row = 0; row < 15; row++) {
