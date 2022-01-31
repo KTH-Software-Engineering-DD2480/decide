@@ -4,6 +4,10 @@ public class FinalUnlockingVector {
     // Final Unlocking Conditions
     public boolean[] conditions;
 
+    FinalUnlockingVector(boolean[] conditions) {
+        this.conditions = conditions;
+    }
+
     FinalUnlockingVector(boolean[] puv, PreliminaryUnlockingMatrix pum) {
         this.conditions = new boolean[15];
 
