@@ -49,3 +49,7 @@ This project is a group effort by:
 - Kunal Bhatnagar [kunalb@kth.se](mailto:kunalb@kth.se)
 - Mark Bergrahm [bergrahm@kth.se](mailto:bergrahm@kth.se)
 - Philip Salqvist [phisal@kth.se](mailto:phisal@kth.se)
+
+## Way of Working
+
+[https://docs.google.com/document/d/1WA-QcM7Koo8VzZklwBr6dFwLt58cqgjsHH9NLUDth1o/edit#](https://docs.google.com/document/d/1WA-QcM7Koo8VzZklwBr6dFwLt58cqgjsHH9NLUDth1o/edit#)
