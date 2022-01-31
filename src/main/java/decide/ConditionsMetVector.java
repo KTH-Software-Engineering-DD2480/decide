@@ -11,20 +11,8 @@ public class ConditionsMetVector {
     ConditionsMetVector(Input input) {
         this.conditions = new boolean[15];
         this.conditions[0] = LIC0(input);
-        this.conditions[1] = LIC1(input);
         this.conditions[2] = LIC2(input);
-        this.conditions[3] = LIC3(input);
         this.conditions[4] = LIC4(input);
-        this.conditions[5] = LIC5(input);
-        this.conditions[6] = LIC6(input);
-        this.conditions[7] = LIC7(input);
-        this.conditions[8] = LIC8(input);
-        this.conditions[9] = LIC9(input);
-        this.conditions[10] = LIC10(input);
-        this.conditions[11] = LIC11(input);
-        this.conditions[12] = LIC12(input);
-        this.conditions[13] = LIC13(input);
-        // this.conditions[14] = LIC14(input);
     }
 
     // LIC 0
@@ -40,11 +28,6 @@ public class ConditionsMetVector {
     }
 
     // LIC 1
-    // Wrapper for LIC1 with many params
-    public static boolean LIC1(Input input) {
-        return LIC1(input, input.parameters.a_points, input.parameters.b_points, input.parameters.radius1, false);
-    }
-
     // Returns true if three consecutive points (separated by a_pts and b_pts) can fit inside (/can't fit inside if `inside` is false)
     // of a circle with radius `radius`
     public static boolean LIC1(Input input, int a_pts, int b_pts, double radius, boolean inside) {
@@ -154,21 +137,23 @@ public class ConditionsMetVector {
     }
 
     // LIC 3
-    // Wrapper for LIC3 with many params
-    public static boolean LIC3(Input input) {
-        return LIC3(input, input.parameters.e_points, input.parameters.f_points);
-    }
-
     // Returns true if there are three consecutive points, seperated by `e_points` and `f_points` (both are 0 for LIC3)
-    // in `input.points` that form a triangle with an area greater than `input.parameters.area`
-    public static boolean LIC3(Input input, int e_points, int f_points) {
+    // in `input.points` that form a triangle with an area greater than `input.parameters.area`. If `inside` = true we
+    // also check that we can find a triangle with an area less than `input.parameters.area2`, and return true only if
+    // both conditions are met.
+    public static boolean LIC3(Input input, int e_points, int f_points, boolean inside) {
         int sequence_length = e_points + f_points + 2;
+        boolean maxLimit = false, minLimit = false;
+        if(!inside) { maxLimit = true; }
         for(int i = 0; i < input.points.length - sequence_length; i++) {
             if(Point.triangleArea(input.points[i], input.points[i + 1 + e_points], input.points[i + 2 + e_points + f_points]) > input.parameters.area) {
-                return true;
+                minLimit = true;
+            }
+            if(inside && Point.triangleArea(input.points[i], input.points[i + 1 + e_points], input.points[i + 2 + e_points + f_points]) < input.parameters.area2) {
+                maxLimit = true;
             }
         }
-        return false;
+        return minLimit && maxLimit;
     }
 
     // LIC 4
@@ -335,8 +320,8 @@ public class ConditionsMetVector {
     // consecutive intervening points, respectively, that are the vertices of a triangle with area greater
     // than `input.parameters.area`. The condition is not met when `input.points.length` < 5
     public static boolean LIC10(Input input) {
-        if(input.points.length < 5) { return false; }
-        return LIC3(input, input.parameters.e_points, input.parameters.f_points);
+        if(input.points.length < 5) return false;
+        return LIC3(input, input.parameters.e_points, input.parameters.f_points, false);
     }
     
     // LIC 11
@@ -397,5 +382,17 @@ public class ConditionsMetVector {
         if(input.points.length < 5) return false;
         return LIC1(input, input.parameters.a_points, input.parameters.b_points, input.parameters.radius1, false)
             && LIC1(input, input.parameters.a_points, input.parameters.b_points, input.parameters.radius2, true);
+    }
+
+    // LIC 14
+    // Returns true if there exists at least one set of three data points separated by exactly `e_points` and `f_points`
+    // consecutive intervening points, respectively, that are the vertices of a triangle with area greater
+    // than `input.parameters.area`. In additions, there exists at least one set of three data points separated 
+    // by exactly `e_points` and `f_points` consecutive intervening points (could be the same points as just mentioned, or different), 
+    // respectively, that are the vertices of a triangle with area less than `input.parameters.area2`.
+    // The condition is not met when `input.points.length` < 5 
+    public static boolean LIC14(Input input) {
+        if(input.points.length < 5) return false;
+        return LIC3(input, input.parameters.e_points, input.parameters.f_points, true);
     }
 }
