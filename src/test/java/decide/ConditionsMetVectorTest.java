@@ -172,6 +172,7 @@ public class ConditionsMetVectorTest {
         assertFalse(ConditionsMetVector.LIC2(input));
     }
 
+    // Test that LIC3 returns true when area of triangle > `area`
     @Test
     void LIC3trueTest() {
         Input input = new Input();
@@ -186,9 +187,10 @@ public class ConditionsMetVectorTest {
             new Point(5, 0)
         };
 
-        assertTrue(ConditionsMetVector.LIC3(input, 0, 0));
+        assertTrue(ConditionsMetVector.LIC3(input, 0, 0, false));
     }
 
+    // Test that LIC3 returns false when area of triangle <= `area`
     @Test
     void LIC3falseTest() {
         Input input = new Input();
@@ -203,7 +205,7 @@ public class ConditionsMetVectorTest {
             new Point(2, 0)
         };
 
-        assertFalse(ConditionsMetVector.LIC3(input, 0, 0));
+        assertFalse(ConditionsMetVector.LIC3(input, 0, 0, false));
     }
 
     @Test
@@ -459,6 +461,7 @@ public class ConditionsMetVectorTest {
         assertFalse(ConditionsMetVector.LIC9(input));
     }
 
+    // Test that LIC10 returns true when area of triangle > `area` 
     @Test
     void LIC10trueTest() {
         Input input = new Input();
@@ -484,8 +487,9 @@ public class ConditionsMetVectorTest {
         assertTrue(ConditionsMetVector.LIC10(input));
     }
 
+    // Test that LIC10 returns false if area of traingle <= `area`
     @Test
-    void LIC10falseTest() {
+    void LIC10falseTest1() {
         Input input = new Input();
         input.parameters = input.new Parameters();
         // use `area` = 10 for testing purposes
@@ -509,8 +513,9 @@ public class ConditionsMetVectorTest {
         assertFalse(ConditionsMetVector.LIC10(input));
     }
 
+    // Test that LIC10 returns false when `input.points.length < 5`
     @Test
-    void LIC10lengthTest() {
+    void LIC10falseTest2() {
         Input input = new Input();
         input.parameters = input.new Parameters();
 
@@ -666,4 +671,101 @@ public class ConditionsMetVectorTest {
         input.parameters.b_points = 3;
         assertEquals(true, ConditionsMetVector.LIC13(input));
     }
+
+    // Test that LIC14 returns true if `area` < area of triangle < `area2`
+    @Test
+    void LIC14trueTest() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.area = 10; // minimum area for testing purposes
+        input.parameters.area2 = 15; // maximum area for testing purposes
+
+        input.parameters.e_points = 2;
+        input.parameters.f_points = 3;
+
+        // expected area = 12.5
+        input.points = new Point[] {
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 5),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(5, 0)
+        };
+
+        assertTrue(ConditionsMetVector.LIC14(input));
+    }
+
+    // Test that LIC14 returns false if area of triangle <= `area` 
+    @Test
+    void LIC14falseTest1() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.area = 10; // minimum area for testing purposes
+        input.parameters.area2 = 15; // maximum area for testing purposes
+
+        input.parameters.e_points = 2;
+        input.parameters.f_points = 3;
+
+        // expected area = 2
+        input.points = new Point[] {
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 2),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(2, 0)
+        };
+
+        assertFalse(ConditionsMetVector.LIC14(input));
+    }
+
+    // Test that LIC14 returns false if area of triangle >= `area2`  
+    @Test
+    void LIC14falseTest2() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+        input.parameters.area = 10; // minimum area for testing purposes
+        input.parameters.area2 = 15; // maximum area for testing purposes
+
+        input.parameters.e_points = 2;
+        input.parameters.f_points = 3;
+
+        // expected area = 2
+        input.points = new Point[] {
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 6),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(6, 0)
+        };
+
+        assertFalse(ConditionsMetVector.LIC14(input));
+    }
+
+    // Test that LIC14 returns false `input.points.length` < 5
+    @Test
+    void LIC14falseTest3() {
+        Input input = new Input();
+        input.parameters = input.new Parameters();
+
+        // number of points < 5
+        input.points = new Point[] {
+            new Point(0, 0),
+            new Point(1, 1),
+            new Point(1, 1),
+            new Point(0, 5),
+        };
+
+        assertFalse(ConditionsMetVector.LIC14(input));
+    }
+
+
 }
