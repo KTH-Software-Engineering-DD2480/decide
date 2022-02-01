@@ -1,0 +1,44 @@
+package decide;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class Main {
+    public static void main(String[] args) {
+        // Read all input from standard input
+        StringBuilder sb = new StringBuilder();
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get("./in/input1.txt"))));
+            while (br.ready()) {
+                sb.append(br.readLine());
+            }
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+        // System.out.println("This was the read input: ");
+        // // Print read input:
+        // System.out.println(sb.toString());
+
+        // Construct input object using what has been read from stdin and an input parser
+        Input input = Input.parse(sb.toString());
+
+        // Calculate the conditions met vector (cmv) for the input
+        ConditionsMetVector cmv = new ConditionsMetVector(input);
+
+        // Use the logical connector matrix (lcm) of the input along with the cmv to calculate the
+        // preliminary unlocking matrix (pum)
+        PreliminaryUnlockingMatrix pum = new PreliminaryUnlockingMatrix(input, cmv);
+
+        // Use the preliminary unlocking vector (puv) of the input along with the pum to calculate
+        // the final unlocking vector (fuv)
+        FinalUnlockingVector fuv = new FinalUnlockingVector(input.puv, pum);
+
+        // Finally calculate the output launch boolean and print the result
+        Output output = new Output(fuv);
+        System.out.println(output.launch);
+
+        // Alternatively for those that fancy one-liners:
+        // System.out.println(new Output(new FinalUnlockingVector(input.puv, new PreliminaryUnlockingMatrix(input, new ConditionsMetVector(input)))));
+    }
+}
