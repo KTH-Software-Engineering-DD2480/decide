@@ -121,7 +121,7 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.epsilon = Math.PI / 2.0;
         input.points = new Point[] {
             new Point(1,0),
             new Point(0,0),
@@ -141,7 +141,7 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.epsilon = Math.PI / 2.0;
         input.points = new Point[] {
             new Point(1,0),
             new Point(0,0),
@@ -161,7 +161,7 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.epsilon = Math.PI / 2.0;
         input.points = new Point[] {
             new Point(0,0),
             new Point(0,0),
@@ -178,7 +178,7 @@ public class ConditionsMetVectorTest {
         Input input = new Input();
         input.parameters = input.new Parameters();
         // use `area` = 10 for testing purposes
-        input.parameters.area = 10;
+        input.parameters.area1 = 10;
 
         // expected area = 12.5
         input.points = new Point[] {
@@ -196,7 +196,7 @@ public class ConditionsMetVectorTest {
         Input input = new Input();
         input.parameters = input.new Parameters();
         // use `area` = 10 for testing purposes
-        input.parameters.area = 10;
+        input.parameters.area1 = 10;
 
         // expected area = 2
         input.points = new Point[] {
@@ -367,7 +367,7 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.epsilon = Math.PI / 2.0;
         input.parameters.c_points = 2;
         input.parameters.d_points = 2;
         input.points = new Point[] {
@@ -394,7 +394,7 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.epsilon = Math.PI / 2.0;
         input.parameters.c_points = 2;
         input.parameters.d_points = 2;
         input.points = new Point[] {
@@ -422,7 +422,7 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.epsilon = Math.PI / 2.0;
         input.parameters.c_points = 1;
         input.parameters.d_points = 1;
         input.points = new Point[] {
@@ -445,7 +445,7 @@ public class ConditionsMetVectorTest {
         input.parameters = input.new Parameters();
 
         //Setup
-        input.parameters.epsilon1 = Math.PI / 2.0;
+        input.parameters.epsilon = Math.PI / 2.0;
         input.parameters.c_points = 1;
         input.parameters.d_points = 1;
         input.points = new Point[] {
@@ -467,7 +467,7 @@ public class ConditionsMetVectorTest {
         Input input = new Input();
         input.parameters = input.new Parameters();
         // use `area` = 10 for testing purposes
-        input.parameters.area = 10;
+        input.parameters.area1 = 10;
 
         input.parameters.e_points = 2;
         input.parameters.f_points = 3;
@@ -493,7 +493,7 @@ public class ConditionsMetVectorTest {
         Input input = new Input();
         input.parameters = input.new Parameters();
         // use `area` = 10 for testing purposes
-        input.parameters.area = 10;
+        input.parameters.area1 = 10;
 
         input.parameters.e_points = 2;
         input.parameters.f_points = 3;
@@ -677,7 +677,7 @@ public class ConditionsMetVectorTest {
     void LIC14trueTest() {
         Input input = new Input();
         input.parameters = input.new Parameters();
-        input.parameters.area = 10; // minimum area for testing purposes
+        input.parameters.area1 = 10; // minimum area for testing purposes
         input.parameters.area2 = 15; // maximum area for testing purposes
 
         input.parameters.e_points = 2;
@@ -703,7 +703,7 @@ public class ConditionsMetVectorTest {
     void LIC14falseTest1() {
         Input input = new Input();
         input.parameters = input.new Parameters();
-        input.parameters.area = 10; // minimum area for testing purposes
+        input.parameters.area1 = 10; // minimum area for testing purposes
         input.parameters.area2 = 15; // maximum area for testing purposes
 
         input.parameters.e_points = 2;
@@ -729,7 +729,7 @@ public class ConditionsMetVectorTest {
     void LIC14falseTest2() {
         Input input = new Input();
         input.parameters = input.new Parameters();
-        input.parameters.area = 10; // minimum area for testing purposes
+        input.parameters.area1 = 10; // minimum area for testing purposes
         input.parameters.area2 = 15; // maximum area for testing purposes
 
         input.parameters.e_points = 2;
