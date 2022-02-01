@@ -16,7 +16,7 @@ public class Main {
                 br = new BufferedReader(new InputStreamReader(System.in));
             }
             while (br.ready()) {
-                sb.append(br.readLine());
+                sb.append(br.readLine() + "\n");
             }
         } catch (IOException ioe) {
             System.out.println(ioe);

@@ -21,7 +21,7 @@ POINTS:
     -3 3
     1 -1
     2 -2
-    3 -3 
+    3 -3
 
 LCM:
     & | & & | & | & | & | & | & |
@@ -38,26 +38,26 @@ LCM:
     & | & & | & | & | & | & | & |
     & | & & | & | & | & | & | & |
     & | & & | & | & | & | & | & |
-    & | & & | & | & | & | & | & | 
+    & | & & | & | & | & | & | & |
 
-PUV: 1 0 0 0 1 1 1 1 0 1 0 0 1 1 1 
+PUV: 1 0 0 0 1 1 1 1 0 1 0 0 1 1 1
 
-LENGTH1: 4 
-RADIUS1: 1 
-EPSILON: 0.5 
-AREA1: 5 
-Q_PTS: 3 
-QUADS: 3 
-DIST: 10 
-N_PTS: 4 
-K_PTS: 2 
-A_PTS: 1 
-B_PTS: 1 
-C_PTS: 3 
-D_PTS: 5 
-E_PTS: 6 
-F_PTS: 2 
-G_PTS: 1 
-LENGTH2: 250 
-RADIUS2: 150 
-AREA2: 15000 
+LENGTH1: 4
+RADIUS1: 1
+EPSILON: 0.5
+AREA1: 5
+Q_PTS: 3
+QUADS: 3
+DIST: 10
+N_PTS: 4
+K_PTS: 2
+A_PTS: 1
+B_PTS: 1
+C_PTS: 3
+D_PTS: 5
+E_PTS: 6
+F_PTS: 2
+G_PTS: 1
+LENGTH2: 250
+RADIUS2: 150
+AREA2: 15000
