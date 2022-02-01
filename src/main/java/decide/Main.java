@@ -9,7 +9,12 @@ public class Main {
         // Read all input from standard input
         StringBuilder sb = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get("./in/input1.txt"))));
+            BufferedReader br;
+            if (args.length != 0) { // Has user supplied path to input?
+                br = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(args[0]))));
+            } else { // Else read from stdin (perhaps user has mounted stdin to stream of their choice)
+                br = new BufferedReader(new InputStreamReader(System.in));
+            }
             while (br.ready()) {
                 sb.append(br.readLine());
             }
