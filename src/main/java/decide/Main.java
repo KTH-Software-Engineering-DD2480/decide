@@ -41,7 +41,11 @@ public class Main {
 
         // Finally calculate the output launch boolean and print the result
         Output output = new Output(fuv);
-        System.out.println(output.launch);
+        if (output.launch) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
 
         // Alternatively for those that fancy one-liners:
         // System.out.println(new Output(new FinalUnlockingVector(input.puv, new PreliminaryUnlockingMatrix(input, new ConditionsMetVector(input)))));
