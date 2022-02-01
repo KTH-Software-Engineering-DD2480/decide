@@ -10,6 +10,13 @@ repositories {
 dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
 }
+
+// Pass args to arg1 like so: `./gradlew run1 -Parg1="argument value goes here" `
+task run1(type: JavaExec) {
+    mainClassName = "decide.Main"
+    classpath = sourceSets.main.runtimeClasspath
+    // args = ["$arg1"]    // Uncomment this line if you wish to pass args on cmd line
+}
  
 test {
     useJUnitPlatform()
