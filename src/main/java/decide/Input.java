@@ -53,6 +53,19 @@ public class Input {
         public double area2;       // Maximum area in LIC 14
     }
 
+    // Determines if the LCM is a symmetric matrix (required by the specification)
+    public boolean isLCMSymmetric() {
+        for (int row = 0; row < 15; row++) {
+            for (int col = 0; col < 15; col++) {
+                if (this.lcm[row][col] != this.lcm[col][row]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     // Parse an `Input` object from a string of text.
     //
     // The input is made up of a number of key-value pairs: `key: value`.
