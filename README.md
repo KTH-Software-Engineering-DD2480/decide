@@ -45,10 +45,28 @@ Every commit must start with one of the following:
 This project is a group effort by:
 
 - Christofer Nolander [cnol@kth.se](mailto:cnol@kth.se)
+    - LIC 4
+    - `Point` class and methods
+    - `Input` parser
+    - CI and build system
+    - This `README`
 - Jiayi Guo [jiayig@kth.se](mailto:jiayig@kth.se)
+    - LIC 5, 6, 7, and 11
+    - Integration test 1
 - Kunal Bhatnagar [kunalb@kth.se](mailto:kunalb@kth.se)
+    - LIC 0, 2, 9, 12
+    - Integration test 3
 - Mark Bergrahm [bergrahm@kth.se](mailto:bergrahm@kth.se)
+    - LIC 1, 8 and 13
+    - Implementation of PUM
+    - `main` function
 - Philip Salqvist [phisal@kth.se](mailto:phisal@kth.se)
+    - LIC 3, 10 and 14
+    - Integration test 2
+
+We also all participated in the items:
+
+- Implementation and testing of FUV and LAUNCH
 
 ## Way of Working
 
