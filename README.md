@@ -42,7 +42,7 @@ Every commit must start with one of the following:
 
 # Contributors
 
-This project is a group effort by:
+This project is a group effort, and the following is a statement of contributions:
 
 - Christofer Nolander [cnol@kth.se](mailto:cnol@kth.se)
     - LIC 4
@@ -57,6 +57,7 @@ This project is a group effort by:
     - LIC 0, 2, 9, 12
     - Integration test 3
 - Mark Bergrahm [bergrahm@kth.se](mailto:bergrahm@kth.se)
+    - Complexity of implementing LICs analysis
     - LIC 1, 8 and 13
     - Implementation of PUM
     - `main` function
