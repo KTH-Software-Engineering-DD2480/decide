@@ -14,7 +14,21 @@ public class MainTest {
 	private static final Input.LogicalOperator A = Input.LogicalOperator.AND;
 	private static final Input.LogicalOperator O = Input.LogicalOperator.OR;
 
-	// Assert that the main returns true for the correct input
+    @Test
+    void main_test_with_args(){
+        Main.main(new String[] {"./in/input1.txt"});
+    }
+
+    // Must redirect System.in or will read empty input and crash
+    @Test
+    void main_test_stdin() {
+        try {
+            Main.main(new String[0]);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
 	@Test
 	void assertTrueIfCorrectInput() {
 		// The parameters should result in the follwing:
@@ -77,7 +91,8 @@ public class MainTest {
 		input.puv = new boolean[] { true, true, true, true, true, true, true, true, false, false, false, true, true,
 				false, false };
 
-		AssertEquals("YES", Main.func(input));
+		AssertEquals("YES", );
 
 	}
+
 }
