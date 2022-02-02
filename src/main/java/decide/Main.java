@@ -27,7 +27,20 @@ public class Main {
 
         // Construct input object using what has been read from stdin and an input parser
         Input input = Input.parse(sb.toString());
+        Output output = computeOutput(input);
 
+        if (output.launch) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
+
+        // Alternatively for those that fancy one-liners:
+        // System.out.println(new Output(new FinalUnlockingVector(input.puv, new PreliminaryUnlockingMatrix(input, new ConditionsMetVector(input)))));
+    }
+    
+    // Compute the output
+    public static Output computeOutput(Input input){
         // Calculate the conditions met vector (cmv) for the input
         ConditionsMetVector cmv = new ConditionsMetVector(input);
 
@@ -41,13 +54,7 @@ public class Main {
 
         // Finally calculate the output launch boolean and print the result
         Output output = new Output(fuv);
-        if (output.launch) {
-            System.out.println("YES");
-        } else {
-            System.out.println("NO");
-        }
 
-        // Alternatively for those that fancy one-liners:
-        // System.out.println(new Output(new FinalUnlockingVector(input.puv, new PreliminaryUnlockingMatrix(input, new ConditionsMetVector(input)))));
+        return output;
     }
 }
