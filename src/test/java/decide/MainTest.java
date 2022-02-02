@@ -32,16 +32,16 @@ public class MainTest {
 	@Test
 	void assertTrueIfCorrectInput() {
 		// The parameters should result in the follwing:
-		// True LIC: 0, 1, 2, 3, 4, 5, 6, 7, 11, 12
-		// False LIC: 8, 9, 10, 13, 14
+		// True LIC: 0, 2, 5, 6, 7, 11, 12
+		// False LIC: 1, 3, 4, 8, 9, 10, 13, 14
 
 		// Define the parameters
 		Input input = new Input();
 		input.parameters = input.new Parameters();
 		input.parameters.length1 = 3;
 		input.parameters.radius1 = 1;
-		input.parameters.epsilon1 = Math.PI / 2.0;
-		input.parameters.area = 5;
+		input.parameters.epsilon = Math.PI / 2.0;
+		input.parameters.area1 = 5;
 		input.parameters.q_points = 3;
 		input.parameters.quads = 1;
 		input.parameters.dist = 3;
@@ -70,28 +70,28 @@ public class MainTest {
 
 		// Define LCM
 		input.lcm = new Input.LogicalOperator[][] {
-				{ A, O, O, A, A, O, A, A, O, O, O, A, O, O, O }, // 0
-				{ O, A, O, A, A, A, O, O, O, N, O, O, O, O, N }, // 1
-				{ O, O, A, A, N, A, O, A, O, O, N, A, A, N, O }, // 2
-				{ O, A, A, A, O, A, A, O, O, O, N, A, O, O, O }, // 3
-				{ A, A, N, O, A, O, O, A, N, O, O, A, O, N, N }, // 4
-				{ N, A, A, A, O, A, O, N, N, N, O, A, O, O, O }, // 5
-				{ A, O, O, A, O, O, A, A, O, N, O, N, N, N, N }, // 6
+				{ A, O, O, O, A, O, A, A, O, O, O, A, O, O, O }, // 0
+				{ O, A, O, N, A, A, O, O, O, N, O, O, O, O, N }, // 1
+				{ O, O, A, O, N, A, O, A, O, O, N, A, A, N, O }, // 2
+				{ O, N, A, A, O, A, A, O, O, O, N, A, O, O, O }, // 3
+				{ A, O, N, O, A, O, O, A, N, O, O, A, O, N, N }, // 4
+				{ N, N, A, N, O, A, O, N, N, N, O, A, O, O, O }, // 5
+				{ A, O, O, O, O, O, A, A, O, N, O, N, N, N, N }, // 6
 				{ A, O, A, O, A, N, A, A, O, O, O, O, A, O, N }, // 7
 				{ O, O, O, A, A, O, O, A, N, O, O, O, A, O, A }, // 8
-				{ A, A, O, O, A, A, A, O, O, N, O, A, O, O, A }, // 9
+				{ A, O, O, A, A, A, A, O, O, N, O, A, O, O, A }, // 9
 				{ A, O, A, A, O, O, A, O, O, O, A, O, A, O, A }, // 10
-				{ A, O, A, A, A, A, N, O, O, N, N, A, O, O, O }, // 11
+				{ A, O, A, O, A, A, N, O, O, N, N, A, O, O, O }, // 11
 				{ O, O, A, O, O, O, N, A, N, O, N, O, A, N, N }, // 12
-				{ O, O, A, O, O, O, N, A, O, O, O, A, A, A, A }, // 13
-				{ A, O, O, A, A, O, A, O, O, N, O, A, A, O, A }, // 14
+				{ O, A, A, A, O, O, N, A, O, O, O, A, A, A, A }, // 13
+				{ A, A, O, A, A, O, A, O, O, N, O, A, A, O, A }, // 14
 		};
 
 		// Define PUV
-		input.puv = new boolean[] { true, true, true, true, true, true, true, true, false, false, false, true, true,
+		input.puv = new boolean[] { true, false, true, false, false, true, true, true, false, false, false, true, true,
 				false, false };
 		
-		Output output = computeOut(input);
+		Output output = Main.computeOutput(input);
 		assertTrue(output.launch);
 
 	}
