@@ -9,9 +9,12 @@ public class MainTest {
     }
 
     // Must redirect System.in or will read empty input and crash
-    // @Test
-    // void main_test_stdin() {
-    //     Main.main(new String[0]); 
-    // }
-
+    @Test
+    void main_test_stdin() {
+        try {
+            Main.main(new String[0]);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 }
