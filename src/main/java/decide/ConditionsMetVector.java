@@ -151,7 +151,7 @@ public class ConditionsMetVector {
         for (int i = 0; i < input.points.length - 2; i++ ) {
             if (!input.points[i+1].coincides(input.points[i]) && !input.points[i+1].coincides(input.points[i+2])) {
                 angle = Point.angle(input.points[i], input.points[i+1], input.points[i+2]);
-                if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
+                if ( (angle < (Math.PI - input.parameters.epsilon)) || (angle > (Math.PI + input.parameters.epsilon)) ) {
                     return true;
                 }
             }
@@ -167,7 +167,7 @@ public class ConditionsMetVector {
 
     // LIC 3
     // Returns true if there are three consecutive points, seperated by `e_points` and `f_points` (both are 0 for LIC3)
-    // in `input.points` that form a triangle with an area greater than `input.parameters.area`. If `inside` = true we
+    // in `input.points` that form a triangle with an area greater than `input.parameters.area1`. If `inside` = true we
     // also check that we can find a triangle with an area less than `input.parameters.area2`, and return true only if
     // both conditions are met.
     public static boolean LIC3(Input input, int e_points, int f_points, boolean inside) {
@@ -175,7 +175,7 @@ public class ConditionsMetVector {
         boolean maxLimit = false, minLimit = false;
         if(!inside) { maxLimit = true; }
         for(int i = 0; i < input.points.length - sequence_length; i++) {
-            if(Point.triangleArea(input.points[i], input.points[i + 1 + e_points], input.points[i + 2 + e_points + f_points]) > input.parameters.area) {
+            if(Point.triangleArea(input.points[i], input.points[i + 1 + e_points], input.points[i + 2 + e_points + f_points]) > input.parameters.area1) {
                 minLimit = true;
             }
             if(inside && Point.triangleArea(input.points[i], input.points[i + 1 + e_points], input.points[i + 2 + e_points + f_points]) < input.parameters.area2) {
@@ -335,7 +335,7 @@ public class ConditionsMetVector {
         for (int i=0; i < input.points.length - seperation - 2; i++ ){
             if (!input.points[i+input.parameters.c_points+1].coincides(input.points[i]) && !input.points[i+input.parameters.c_points+1].coincides(input.points[i+seperation+2])) {
                 angle = Point.angle(input.points[i], input.points[i+input.parameters.c_points+1], input.points[i+seperation+2]);
-                if ( (angle < (Math.PI - input.parameters.epsilon1)) || (angle > (Math.PI + input.parameters.epsilon1)) ) {
+                if ( (angle < (Math.PI - input.parameters.epsilon)) || (angle > (Math.PI + input.parameters.epsilon)) ) {
                     return true;
                 }
             }
@@ -347,7 +347,7 @@ public class ConditionsMetVector {
     // LIC 10
     // Returns true if there exists at least one set of three data points separated by exactly `e_points` and `f_points`
     // consecutive intervening points, respectively, that are the vertices of a triangle with area greater
-    // than `input.parameters.area`. The condition is not met when `input.points.length` < 5
+    // than `input.parameters.area1`. The condition is not met when `input.points.length` < 5
     public static boolean LIC10(Input input) {
         if(input.points.length < 5) return false;
         return LIC3(input, input.parameters.e_points, input.parameters.f_points, false);
@@ -416,7 +416,7 @@ public class ConditionsMetVector {
     // LIC 14
     // Returns true if there exists at least one set of three data points separated by exactly `e_points` and `f_points`
     // consecutive intervening points, respectively, that are the vertices of a triangle with area greater
-    // than `input.parameters.area`. In additions, there exists at least one set of three data points separated
+    // than `input.parameters.area1`. In additions, there exists at least one set of three data points separated
     // by exactly `e_points` and `f_points` consecutive intervening points (could be the same points as just mentioned, or different),
     // respectively, that are the vertices of a triangle with area less than `input.parameters.area2`.
     // The condition is not met when `input.points.length` < 5

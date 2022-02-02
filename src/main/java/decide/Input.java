@@ -34,8 +34,8 @@ public class Input {
     public class Parameters {
         public double length1;     // Length in LICs 0, 7, 12
         public double radius1;     // Radius in LICs 1, 8, 13
-        public double epsilon1;    // Deviation from PI in LICs 2, 9
-        public double area;        // Area in LICs 3, 10, 14
+        public double epsilon;    // Deviation from PI in LICs 2, 9
+        public double area1;        // Area in LICs 3, 10, 14
         public int q_points;       // No. of consecutive points in LIC 4
         public int quads;          // No. of quadrants in LIC 4
         public double dist;        // Distance in LIC 6
@@ -113,8 +113,8 @@ public class Input {
             keyParsers.put("PUV", parser -> input.puv = parser.parsePUV());
             keyParsers.put("LENGTH1", parser -> input.parameters.length1 = parser.parseNumber());
             keyParsers.put("RADIUS1", parser -> input.parameters.radius1 = parser.parseNumber());
-            keyParsers.put("EPSILON", parser -> input.parameters.epsilon1 = parser.parseNumber());
-            keyParsers.put("AREA1", parser -> input.parameters.area = parser.parseNumber());
+            keyParsers.put("EPSILON", parser -> input.parameters.epsilon = parser.parseNumber());
+            keyParsers.put("AREA1", parser -> input.parameters.area1 = parser.parseNumber());
             keyParsers.put("Q_PTS", parser -> input.parameters.q_points = parser.parseInteger());
             keyParsers.put("QUADS", parser -> input.parameters.quads = parser.parseInteger());
             keyParsers.put("DIST", parser -> input.parameters.dist = parser.parseNumber());

@@ -86,8 +86,8 @@ public class InputTest {
 
         assertEquals(4, input.parameters.length1, 1e-6);
         assertEquals(3.14, input.parameters.radius1, 1e-6);
-        assertEquals(1e-2, input.parameters.epsilon1, 1e-6);
-        assertEquals(4, input.parameters.area, 1e-6);
+        assertEquals(1e-2, input.parameters.epsilon, 1e-6);
+        assertEquals(4, input.parameters.area1, 1e-6);
 
         assertEquals(5, input.parameters.q_points);
         assertEquals(123, input.parameters.quads);
