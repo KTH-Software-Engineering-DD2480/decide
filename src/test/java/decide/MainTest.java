@@ -28,7 +28,7 @@ public class MainTest {
             System.err.println(e);
         }
     }
-
+	
 	@Test
 	void assertTrueIfCorrectInput() {
 		// The parameters should result in the follwing:
@@ -90,8 +90,9 @@ public class MainTest {
 		// Define PUV
 		input.puv = new boolean[] { true, true, true, true, true, true, true, true, false, false, false, true, true,
 				false, false };
-
-		AssertEquals("YES", );
+		
+		Output output = computeOut(input);
+		assertTrue(output.launch);
 
 	}
 
