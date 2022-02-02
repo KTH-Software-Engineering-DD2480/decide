@@ -64,8 +64,9 @@ This project is a group effort by:
     - LIC 3, 10 and 14
     - Integration test 2
 
-We also all participated in the items:
+We also all participated on the following:
 
+- Definition of `Input` and `Output`
 - Implementation and testing of FUV and LAUNCH
 
 ## Way of Working
